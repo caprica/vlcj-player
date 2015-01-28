@@ -14,6 +14,11 @@ of the same features implemented as possible.
 However, it is not possible to get a 100% like-for-like implementation since
 LibVLC, used by vlcj, exposes only a sub-set of the total functionality of VLC. 
 
+Screenshot
+----------
+
+![vlcj-player](https://github.com/caprica/vlcj-player/raw/master/doc/vlcj-player.png "vlcj-player")
+
 Features
 --------
 
