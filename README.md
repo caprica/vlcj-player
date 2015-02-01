@@ -68,13 +68,6 @@ and the application should start.
 
 On the other hand, just run it from an Eclipse project.
 
-vlcj Dependency
----------------
-
-This project currently requires a bleeding edge vlcj-3.2.0-SNAPSHOT, so you
-will have to build vlcj yourself from the maven project until vlcj-3.2.0 final
-release is made to Maven Central.
-
 License
 -------
 
