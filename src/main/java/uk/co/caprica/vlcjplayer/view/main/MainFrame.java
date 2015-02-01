@@ -20,12 +20,14 @@
 package uk.co.caprica.vlcjplayer.view.main;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -42,6 +44,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
@@ -439,6 +442,7 @@ public final class MainFrame extends BaseFrame {
                 videoContentPane.showDefault();
                 mouseMovementDetector.stop();
                 application().post(StoppedEvent.INSTANCE);
+                JOptionPane.showMessageDialog(MainFrame.this, MessageFormat.format(resources().getString("error.errorEncountered"), fileChooser.getSelectedFile().toString()), resources().getString("dialog.errorEncountered"), JOptionPane.ERROR_MESSAGE);
             }
 
             @Override
