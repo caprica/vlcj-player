@@ -419,6 +419,7 @@ public final class MainFrame extends BaseFrame {
 
             @Override
             public void paused(MediaPlayer mediaPlayer) {
+                mouseMovementDetector.stop();
                 application().post(PausedEvent.INSTANCE);
             }
 
