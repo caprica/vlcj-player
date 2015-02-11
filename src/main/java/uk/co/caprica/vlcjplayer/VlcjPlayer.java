@@ -34,7 +34,6 @@ import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.streams.NativeStreams;
-import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
 import uk.co.caprica.vlcjplayer.view.debug.DebugFrame;
 import uk.co.caprica.vlcjplayer.view.effects.EffectsFrame;
@@ -75,9 +74,6 @@ public class VlcjPlayer {
     public static void main(String[] args) throws InterruptedException {
         // This will locate LibVLC for the vast majority of cases
         new NativeDiscovery().discover();
-
-        // This now seems *required* on Linux, on other platforms it will silently be ignored
-        LibXUtil.initialise();
 
         setLookAndFeel();
 
