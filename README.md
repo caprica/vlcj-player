@@ -54,13 +54,6 @@ Status
 
 This project is currently a work-in-progress.
 
-The core of the application is there and is usable, but there are significant
-features missing and a whole bunch of FIXME and questionable code.
-
-It is however a good example for how to build media players with vlcj, and has
-more time and care invested in it than most of the individual vlcj test 
-examples.
-
 If you execute "mvn install" or "mvn package", you will get a distribution
 package that you can unpack. This will give you the vlcj-player application jar
 and all of the dependencies - you can simply execute `java -jar vlcj-player-1.0.0-SNAPSHOT.jar`
