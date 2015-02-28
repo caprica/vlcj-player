@@ -63,7 +63,12 @@ public final class Application {
 
     private Application() {
         eventBus = new EventBus();
-        mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
+            @Override
+            protected String[] onGetMediaPlayerFactoryExtraArgs() {
+                return new String[] {"--no-osd"}; // Disables the display of the snapshot filename (amongst other things)
+            }
+        };
         mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.getMediaPlayer());
         tickService.scheduleWithFixedDelay(new Runnable() {
             @Override
