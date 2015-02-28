@@ -63,11 +63,13 @@ import uk.co.caprica.vlcjplayer.event.PlayingEvent;
 import uk.co.caprica.vlcjplayer.event.ShowDebugEvent;
 import uk.co.caprica.vlcjplayer.event.ShowEffectsEvent;
 import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
+import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
 import uk.co.caprica.vlcjplayer.event.StoppedEvent;
 import uk.co.caprica.vlcjplayer.view.BaseFrame;
 import uk.co.caprica.vlcjplayer.view.MouseMovementDetector;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
+import uk.co.caprica.vlcjplayer.view.snapshot.SnapshotView;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -562,6 +564,11 @@ public final class MainFrame extends BaseFrame {
         deregisterEscapeBinding();
         menuBar.setVisible(true);
         bottomPane.setVisible(true);
+    }
+
+    @Subscribe
+    public void onSnapshotImage(SnapshotImageEvent event) {
+        new SnapshotView(event.image());
     }
 
     private void registerEscapeBinding() {

@@ -57,6 +57,8 @@ final class ControlsPane extends BasePanel {
 
     private final Icon extendedIcon = newIcon("extended");
 
+    private final Icon snapshotIcon = newIcon("snapshot");
+
     private final Icon volumeHighIcon = newIcon("volume-high");
 
     private final Icon volumeMutedIcon = newIcon("volume-muted");
@@ -72,6 +74,8 @@ final class ControlsPane extends BasePanel {
     private final JButton fullscreenButton;
 
     private final JButton extendedButton;
+
+    private final JButton snapshotButton;
 
     private final JButton muteButton;
 
@@ -90,13 +94,15 @@ final class ControlsPane extends BasePanel {
         fullscreenButton.setIcon(fullscreenIcon);
         extendedButton = new StandardButton();
         extendedButton.setIcon(extendedIcon);
+        snapshotButton = new StandardButton();
+        snapshotButton.setAction(mediaPlayerActions.videoSnapshotAction());
         muteButton = new StandardButton();
         muteButton.setIcon(volumeHighIcon);
         volumeSlider = new JSlider();
         volumeSlider.setMinimum(LibVlcConst.MIN_VOLUME);
         volumeSlider.setMaximum(LibVlcConst.MAX_VOLUME);
 
-        setLayout(new MigLayout("fill, insets 0 0 0 0", "[]12[]0[]0[]12[]0[]push[]0[]", "[]"));
+        setLayout(new MigLayout("fill, insets 0 0 0 0", "[]12[]0[]0[]12[]0[]12[]push[]0[]", "[]"));
 
         add(playPauseButton);
         add(previousButton, "sg 1");
@@ -105,6 +111,8 @@ final class ControlsPane extends BasePanel {
 
         add(fullscreenButton, "sg 1");
         add(extendedButton, "sg 1");
+
+        add(snapshotButton, "sg 1");
 
         add(muteButton, "sg 1");
         add(volumeSlider, "wmax 100");

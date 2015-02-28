@@ -61,17 +61,25 @@ public final class ImagePane extends JComponent {
         this.mode = mode;
         this.opacity = opacity;
         newImage(imageUrl);
+        prepareImage();
+    }
+
+    public ImagePane(Mode mode, BufferedImage image, float opacity) {
+        this.mode = mode;
+        this.opacity = opacity;
+        this.sourceImage = image;
+        prepareImage();
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return image != null ? new Dimension(image.getWidth(), image.getHeight()) : super.getPreferredSize();
+        return sourceImage != null ? new Dimension(sourceImage.getWidth(), sourceImage.getHeight()) : super.getPreferredSize();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         prepareImage();
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(Color.black);
         g2.fill(getBounds());
@@ -89,6 +97,7 @@ public final class ImagePane extends JComponent {
             g2.drawImage(image, null, x, y);
             g2.setComposite(oldComposite);
         }
+        g2.dispose();
     }
 
     @Override

@@ -17,28 +17,19 @@
  * Copyright 2015 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
+package uk.co.caprica.vlcjplayer.event;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+public final class SnapshotImageEvent {
 
-final class SnapshotAction extends MediaPlayerAction {
+    private final BufferedImage image;
 
-    SnapshotAction(Resource resource, MediaPlayer mediaPlayer) {
-        super(resource, mediaPlayer);
+    public SnapshotImageEvent(BufferedImage image) {
+        this.image = image;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        BufferedImage image = mediaPlayer.getSnapshot();
-        if (image != null) {
-            application().post(new SnapshotImageEvent(image));
-        }
+    public BufferedImage image() {
+        return image;
     }
 }
