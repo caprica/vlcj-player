@@ -63,11 +63,6 @@ public final class ImagePane extends JComponent {
         newImage(imageUrl);
     }
 
-    public void setImage(URL imageUrl) {
-        newImage(imageUrl);
-        repaint();
-    }
-
     @Override
     public Dimension getPreferredSize() {
         return image != null ? new Dimension(image.getWidth(), image.getHeight()) : super.getPreferredSize();
