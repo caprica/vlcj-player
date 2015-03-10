@@ -19,6 +19,10 @@
 
 package uk.co.caprica.vlcjplayer;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -41,6 +45,8 @@ public final class Application {
 
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME);
 
+    private static final int MAX_RECENT_MEDIA_SIZE = 10;
+
     private final EventBus eventBus;
 
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
@@ -48,6 +54,8 @@ public final class Application {
     private final MediaPlayerActions mediaPlayerActions;
 
     private final ScheduledExecutorService tickService = Executors.newSingleThreadScheduledExecutor();
+
+    private final Deque<String> recentMedia = new ArrayDeque<>(MAX_RECENT_MEDIA_SIZE);
 
     private static final class ApplicationHolder {
         private static final Application INSTANCE = new Application();
@@ -103,5 +111,22 @@ public final class Application {
 
     public MediaPlayerActions mediaPlayerActions() {
         return mediaPlayerActions;
+    }
+
+    public void addRecentMedia(String mrl) {
+        if (!recentMedia.contains(mrl)) {
+            recentMedia.addFirst(mrl);
+            while (recentMedia.size() > MAX_RECENT_MEDIA_SIZE) {
+                recentMedia.pollLast();
+            }
+        }
+    }
+
+    public List<String> recentMedia() {
+        return new ArrayList<>(recentMedia);
+    }
+
+    public void clearRecentMedia() {
+        recentMedia.clear();
     }
 }

@@ -83,8 +83,8 @@ public final class MainFrame extends BaseFrame {
 
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-    private final Action fileOpenAction;
-    private final Action fileQuitAction;
+    private final Action mediaOpenAction;
+    private final Action mediaQuitAction;
 
     private final StandardAction videoFullscreenAction;
     private final StandardAction videoAlwaysOnTopAction;
@@ -102,6 +102,7 @@ public final class MainFrame extends BaseFrame {
     private final JMenuBar menuBar;
 
     private final JMenu mediaMenu;
+    private final JMenu mediaRecentMenu;
 
     private final JMenu playbackMenu;
     private final JMenu playbackTitleMenu;
@@ -147,17 +148,19 @@ public final class MainFrame extends BaseFrame {
 
         MediaPlayerActions mediaPlayerActions = application().mediaPlayerActions();
 
-        fileOpenAction = new StandardAction(resource("menu.media.item.openFile")) {
+        mediaOpenAction = new StandardAction(resource("menu.media.item.openFile")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(MainFrame.this)) {
                     File file = fileChooser.getSelectedFile();
-                    mediaPlayerComponent.getMediaPlayer().playMedia(file.getAbsolutePath());
+                    String mrl = file.getAbsolutePath();
+                    application().addRecentMedia(mrl);
+                    mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
                 }
             }
         };
 
-        fileQuitAction = new StandardAction(resource("menu.media.item.quit")) {
+        mediaQuitAction = new StandardAction(resource("menu.media.item.quit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -255,9 +258,11 @@ public final class MainFrame extends BaseFrame {
 
         mediaMenu = new JMenu(resource("menu.media").name());
         mediaMenu.setMnemonic(resource("menu.media").mnemonic());
-        mediaMenu.add(new JMenuItem(fileOpenAction));
+        mediaMenu.add(new JMenuItem(mediaOpenAction));
+        mediaRecentMenu = new RecentMediaMenu(resource("menu.media.item.recent")).menu();
+        mediaMenu.add(mediaRecentMenu);
         mediaMenu.add(new JSeparator());
-        mediaMenu.add(new JMenuItem(fileQuitAction));
+        mediaMenu.add(new JMenuItem(mediaQuitAction));
         menuBar.add(mediaMenu);
 
         playbackMenu = new JMenu(resource("menu.playback").name());
