@@ -28,6 +28,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -540,6 +542,14 @@ public final class MainFrame extends BaseFrame {
         statusBar.setVisible(statusBarVisible);
         viewStatusBarAction.select(statusBarVisible);
         fileChooser.setCurrentDirectory(new File(prefs.get("chooserDirectory", ".")));
+        String recentMedia = prefs.get("recentMedia", "");
+        if (recentMedia.length() > 0) {
+            List<String> mrls = Arrays.asList(prefs.get("recentMedia", "").split("\\|"));
+            Collections.reverse(mrls);
+            for (String mrl : mrls) {
+                application().addRecentMedia(mrl);
+            }
+        }
     }
 
     @Override
@@ -553,6 +563,23 @@ public final class MainFrame extends BaseFrame {
             prefs.putBoolean("alwaysOnTop"     , isAlwaysOnTop());
             prefs.putBoolean("statusBar"       , statusBar.isVisible());
             prefs.put       ("chooserDirectory", fileChooser.getCurrentDirectory().toString());
+
+            String recentMedia;
+            List<String> mrls = application().recentMedia();
+            if (!mrls.isEmpty()) {
+                StringBuilder sb = new StringBuilder();
+                for (String mrl : mrls) {
+                    if (sb.length() > 0) {
+                        sb.append('|');
+                    }
+                    sb.append(mrl);
+                }
+                recentMedia = sb.toString();
+            }
+            else {
+                recentMedia = "";
+            }
+            prefs.put("recentMedia", recentMedia);
         }
     }
 
