@@ -50,12 +50,12 @@ public class VlcjPlayer {
     // Redirect the native output streams to files, useful since VLC can generate a lot of noisy native logs we don't care about
     // (on the other hand, if we don't look at the logs we might won't see errors)
     static {
-        if (RuntimeUtil.isNix()) {
-            nativeStreams = new NativeStreams("stdout.log", "stderr.log");
-        }
-        else {
+//        if (RuntimeUtil.isNix()) {
+//            nativeStreams = new NativeStreams("stdout.log", "stderr.log");
+//        }
+//        else {
             nativeStreams = null;
-        }
+//        }
     }
 
     private final JFrame mainFrame;
@@ -130,10 +130,6 @@ public class VlcjPlayer {
         messagesFrame = new NativeLogFrame(nativeLog);
         effectsFrame = new EffectsFrame();
         debugFrame = new DebugFrame();
-
-        // If you want to disable the cursor over the video, then do it before you display the
-        // window that contains the video surface
-        mediaPlayerComponent.setCursorEnabled(false);
     }
 
     private void start() {
