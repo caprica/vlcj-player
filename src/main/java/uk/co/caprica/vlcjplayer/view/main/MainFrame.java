@@ -54,7 +54,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.binding.internal.libvlc_meta_t;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -456,13 +455,11 @@ public final class MainFrame extends BaseFrame {
             }
 
             @Override
-            public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+            public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        if (metaType == libvlc_meta_t.libvlc_meta_Title.intValue()) {
-                            statusBar.setTitle(mediaPlayer.getMediaMeta().getTitle());
-                        }
+                        statusBar.setTitle(mediaPlayer.getMediaMeta().getTitle());
                     }
                 });
             }
