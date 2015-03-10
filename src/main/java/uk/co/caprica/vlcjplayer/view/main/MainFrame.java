@@ -443,7 +443,6 @@ public final class MainFrame extends BaseFrame {
                 videoContentPane.showDefault();
                 mouseMovementDetector.stop();
                 application().post(StoppedEvent.INSTANCE);
-                mediaPlayerComponent.getMediaPlayer().stop(); // Seems to be needed, e.g. if you want to press play again
             }
 
             @Override
