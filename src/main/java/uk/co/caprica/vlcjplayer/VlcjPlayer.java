@@ -130,10 +130,6 @@ public class VlcjPlayer {
         messagesFrame = new NativeLogFrame(nativeLog);
         effectsFrame = new EffectsFrame();
         debugFrame = new DebugFrame();
-
-        // If you want to disable the cursor over the video, then do it before you display the
-        // window that contains the video surface
-        mediaPlayerComponent.setCursorEnabled(false);
     }
 
     private void start() {

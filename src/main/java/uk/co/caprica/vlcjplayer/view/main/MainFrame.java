@@ -66,6 +66,7 @@ import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
 import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
 import uk.co.caprica.vlcjplayer.event.StoppedEvent;
 import uk.co.caprica.vlcjplayer.view.BaseFrame;
+import uk.co.caprica.vlcjplayer.view.MouseMovementDetector;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 import uk.co.caprica.vlcjplayer.view.snapshot.SnapshotView;
@@ -140,6 +141,8 @@ public final class MainFrame extends BaseFrame {
     private final VideoContentPane videoContentPane;
 
     private final JPanel bottomPane;
+
+    private final MouseMovementDetector mouseMovementDetector;
 
     public MainFrame() {
         super("vlcj player");
@@ -417,16 +420,19 @@ public final class MainFrame extends BaseFrame {
             @Override
             public void playing(MediaPlayer mediaPlayer) {
                 videoContentPane.showVideo();
+                mouseMovementDetector.start();
                 application().post(PlayingEvent.INSTANCE);
             }
 
             @Override
             public void paused(MediaPlayer mediaPlayer) {
+                mouseMovementDetector.stop();
                 application().post(PausedEvent.INSTANCE);
             }
 
             @Override
             public void stopped(MediaPlayer mediaPlayer) {
+                mouseMovementDetector.stop();
                 videoContentPane.showDefault();
                 application().post(StoppedEvent.INSTANCE);
             }
@@ -434,6 +440,7 @@ public final class MainFrame extends BaseFrame {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
                 videoContentPane.showDefault();
+                mouseMovementDetector.stop();
                 application().post(StoppedEvent.INSTANCE);
                 mediaPlayerComponent.getMediaPlayer().stop(); // Seems to be needed, e.g. if you want to press play again
             }
@@ -441,6 +448,7 @@ public final class MainFrame extends BaseFrame {
             @Override
             public void error(MediaPlayer mediaPlayer) {
                 videoContentPane.showDefault();
+                mouseMovementDetector.stop();
                 application().post(StoppedEvent.INSTANCE);
                 JOptionPane.showMessageDialog(MainFrame.this, MessageFormat.format(resources().getString("error.errorEncountered"), fileChooser.getSelectedFile().toString()), resources().getString("dialog.errorEncountered"), JOptionPane.ERROR_MESSAGE);
             }
@@ -489,6 +497,8 @@ public final class MainFrame extends BaseFrame {
         });
 
         applyPreferences();
+
+        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.getVideoSurface(), 500, mediaPlayerComponent);
 
         setMinimumSize(new Dimension(370, 240));
     }
