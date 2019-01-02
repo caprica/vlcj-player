@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingUtilities;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
@@ -74,7 +75,7 @@ public final class Application {
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
             @Override
             protected String[] onGetMediaPlayerFactoryExtraArgs() {
-                return new String[] {"--no-osd"}; // Disables the display of the snapshot filename (amongst other things)
+                return new String[] {"--no-osd"};
             }
         };
         mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.getMediaPlayer());
@@ -83,7 +84,7 @@ public final class Application {
             public void run() {
                 eventBus.post(TickEvent.INSTANCE);
             }
-        }, 0, 1000, TimeUnit.MILLISECONDS);
+        }, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     public void subscribe(Object subscriber) {
