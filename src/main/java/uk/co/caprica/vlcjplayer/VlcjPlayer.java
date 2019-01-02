@@ -31,6 +31,8 @@ import javax.swing.UIManager;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.log.NativeLog;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.streams.NativeStreams;
@@ -40,10 +42,14 @@ import uk.co.caprica.vlcjplayer.view.effects.EffectsFrame;
 import uk.co.caprica.vlcjplayer.view.main.MainFrame;
 import uk.co.caprica.vlcjplayer.view.messages.NativeLogFrame;
 
+import com.sun.jna.NativeLibrary;
+
 /**
  * Application entry-point.
  */
 public class VlcjPlayer {
+
+    private static VlcjPlayer app;
 
     private static final NativeStreams nativeStreams;
 
@@ -75,12 +81,14 @@ public class VlcjPlayer {
         // This will locate LibVLC for the vast majority of cases
         new NativeDiscovery().discover();
 
-        setLookAndFeel();
+//        setLookAndFeel();
+
+        app = new VlcjPlayer();
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new VlcjPlayer().start();
+                app.start();
             }
         });
     }
@@ -122,7 +130,7 @@ public class VlcjPlayer {
         });
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
+        final EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
         embeddedMediaPlayer.setFullScreenStrategy(new VlcjPlayerFullScreenStrategy(mainFrame));
 
         nativeLog = mediaPlayerComponent.getMediaPlayerFactory().newLog();
