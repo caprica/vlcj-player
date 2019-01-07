@@ -2,3 +2,5 @@
 /junk/
 /stderr.log
 /stdout.log
+.idea
+vlcj-player.iml
