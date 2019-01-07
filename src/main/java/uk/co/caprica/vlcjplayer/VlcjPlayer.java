@@ -81,7 +81,7 @@ public class VlcjPlayer {
         // This will locate LibVLC for the vast majority of cases
         new NativeDiscovery().discover();
 
-//        setLookAndFeel();
+        setLookAndFeel();
 
         app = new VlcjPlayer();
 
@@ -96,7 +96,7 @@ public class VlcjPlayer {
     private static void setLookAndFeel() {
         String lookAndFeelClassName;
         if (RuntimeUtil.isNix()) {
-            lookAndFeelClassName = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+            lookAndFeelClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
         }
         else {
             lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
