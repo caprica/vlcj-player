@@ -24,6 +24,7 @@ import static uk.co.caprica.vlcjplayer.Application.resources;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -54,7 +55,11 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.binding.internal.libvlc_logo_position_e;
+import uk.co.caprica.vlcj.binding.internal.libvlc_marquee_position_e;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.Logo;
+import uk.co.caprica.vlcj.player.Marquee;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
@@ -483,6 +488,27 @@ public final class MainFrame extends BaseFrame {
                         statusBar.setTime(newTime);
                     }
                 });
+            }
+
+            @Override
+            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+                Logo logo = Logo.logo()
+                    .file("src/main/resources/vlcj-logo.png")
+                    .position(libvlc_logo_position_e.top_left)
+                    .opacity(0.5f)
+                    .enable();
+
+                mediaPlayer.setLogo(logo);
+
+                Marquee marquee = Marquee.marquee()
+                    .text(String.format("vlcj-player"))
+                    .colour(Color.white.getRGB())
+                    .size(20)
+                    .position(libvlc_marquee_position_e.bottom_right)
+                    .location(10,5)
+                    .enable();
+
+                mediaPlayer.setMarquee(marquee);
             }
         });
 
