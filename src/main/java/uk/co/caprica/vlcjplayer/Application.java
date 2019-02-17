@@ -68,8 +68,6 @@ public final class Application {
 
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 
-        mediaPlayerComponent.getMediaPlayer().media().setRepeat(true);
-
         mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.getMediaPlayer());
 
         tickService.scheduleWithFixedDelay(new Runnable() {
