@@ -62,7 +62,8 @@ public abstract class MouseMovementDetector {
             onStarted();
         }
         else {
-            throw new IllegalStateException("Already started");
+//            throw new IllegalStateException("Already started");
+            // FIXME
         }
     }
 

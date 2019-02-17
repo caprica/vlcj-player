@@ -39,9 +39,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.binding.LibVlcConst;
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.Equalizer;
+import uk.co.caprica.vlcj.player.base.LibVlcConst;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.base.Equalizer;
 import uk.co.caprica.vlcjplayer.view.BasePanel;
 import uk.co.caprica.vlcjplayer.view.SliderControl;
 import uk.co.caprica.vlcjplayer.view.StandardLabel;
@@ -66,10 +66,10 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
     public EqualizerPanel() {
         this.mediaPlayerComponent = application().mediaPlayerComponent();
 
-        this.equalizer = mediaPlayerComponent.getMediaPlayerFactory().newEqualizer();
+        this.equalizer = mediaPlayerComponent.getMediaPlayerFactory().equalizers().newEqualizer();
 
-        List<Float> list = mediaPlayerComponent.getMediaPlayerFactory().getEqualizerBandFrequencies();
-        List<String> presets = mediaPlayerComponent.getMediaPlayerFactory().getEqualizerPresetNames();
+        List<Float> list = mediaPlayerComponent.getMediaPlayerFactory().equalizers().bands();
+        List<String> presets = mediaPlayerComponent.getMediaPlayerFactory().equalizers().presets();
 
         JPanel bandsPane = new JPanel();
         bandsPane.setLayout(new GridLayout(1, 1 + list.size(), 2, 0));
@@ -140,7 +140,7 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
     @Override
     public final void actionPerformed(ActionEvent e) {
         boolean enable = enableCheckBox.isSelected();
-        mediaPlayerComponent.getMediaPlayer().setEqualizer(enable ? equalizer : null);
+        mediaPlayerComponent.getMediaPlayer().audio().setEqualizer(enable ? equalizer : null);
         enableControls(enable);
     }
 
@@ -169,7 +169,7 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
         String presetName = (String) presetComboBox.getSelectedItem();
         if (e.getStateChange() == ItemEvent.SELECTED) {
             if (presetName != null) {
-                Equalizer presetEqualizer = mediaPlayerComponent.getMediaPlayerFactory().newEqualizer(presetName);
+                Equalizer presetEqualizer = mediaPlayerComponent.getMediaPlayerFactory().equalizers().newEqualizer(presetName);
                 if (presetEqualizer != null) {
                     applyingPreset = true;
                     preampControl.getSlider().setValue((int) (presetEqualizer.getPreamp() * 100f));

@@ -21,13 +21,13 @@ package uk.co.caprica.vlcjplayer.view.messages;
 
 import javax.swing.DefaultComboBoxModel;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
+import uk.co.caprica.vlcj.log.LogLevel;
 
 @SuppressWarnings("serial")
-final class LogLevelComboBoxModel extends DefaultComboBoxModel<libvlc_log_level_e> {
+final class LogLevelComboBoxModel extends DefaultComboBoxModel<LogLevel> {
 
     LogLevelComboBoxModel() {
-        for(libvlc_log_level_e value : libvlc_log_level_e.values()) {
+        for(LogLevel value : LogLevel.values()) {
             addElement(value);
         }
     }

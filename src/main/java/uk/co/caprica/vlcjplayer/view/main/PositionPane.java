@@ -32,7 +32,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.StandardLabel;
 
@@ -76,7 +76,7 @@ final class PositionPane extends JPanel {
                     else {
                         sliderChanging.set(false);
                     }
-                    mediaPlayer.setPosition(source.getValue() / 1000.0f);
+                    mediaPlayer.controls().setPosition(source.getValue() / 1000.0f);
                 }
             }
         });
@@ -99,7 +99,7 @@ final class PositionPane extends JPanel {
         timeLabel.setText(formatTime(time));
 
         if (!sliderChanging.get()) {
-            int value = (int) (mediaPlayer.getPosition() * 1000.0f);
+            int value = (int) (mediaPlayer.status().getPosition() * 1000.0f);
             positionChanging.set(true);
             positionSlider.setValue(value);
             positionChanging.set(false);

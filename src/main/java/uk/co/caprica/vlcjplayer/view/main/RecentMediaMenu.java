@@ -19,21 +19,16 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-import java.awt.event.ActionEvent;
-import java.util.List;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JMenu;
-import javax.swing.JSeparator;
-import javax.swing.KeyStroke;
-
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.util.List;
+
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 final class RecentMediaMenu extends OnDemandMenu {
 
@@ -67,7 +62,7 @@ final class RecentMediaMenu extends OnDemandMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            application().mediaPlayerComponent().getMediaPlayer().playMedia(mrl);
+            application().mediaPlayerComponent().getMediaPlayer().media().play(mrl);
         }
     }
 

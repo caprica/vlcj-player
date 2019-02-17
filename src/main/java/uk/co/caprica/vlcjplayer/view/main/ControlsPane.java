@@ -33,7 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.binding.LibVlcConst;
+import uk.co.caprica.vlcj.player.base.LibVlcConst;
 import uk.co.caprica.vlcjplayer.event.PausedEvent;
 import uk.co.caprica.vlcjplayer.event.PlayingEvent;
 import uk.co.caprica.vlcjplayer.event.ShowEffectsEvent;
@@ -120,7 +120,7 @@ final class ControlsPane extends BasePanel {
         volumeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                application().mediaPlayerComponent().getMediaPlayer().setVolume(volumeSlider.getValue());
+                application().mediaPlayerComponent().getMediaPlayer().audio().setVolume(volumeSlider.getValue());
             }
         });
 
@@ -129,14 +129,14 @@ final class ControlsPane extends BasePanel {
         muteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                application().mediaPlayerComponent().getMediaPlayer().mute();
+                application().mediaPlayerComponent().getMediaPlayer().audio().mute();
             }
         });
 
         fullscreenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                application().mediaPlayerComponent().getMediaPlayer().toggleFullScreen();
+                application().mediaPlayerComponent().getMediaPlayer().fullScreen().toggleFullScreen();
             }
         });
 

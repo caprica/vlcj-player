@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.Application.resources;
 
 import java.awt.Color;
@@ -38,8 +39,7 @@ import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 
 import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.Info;
-import uk.co.caprica.vlcj.version.LibVlcVersion;
+import uk.co.caprica.vlcj.support.Info;
 
 final class AboutDialog extends JDialog {
 
@@ -54,7 +54,7 @@ final class AboutDialog extends JDialog {
             throw new RuntimeException("Failed to load build.properties", e);
         }
 
-        setLayout(new MigLayout("insets 30, fillx", "[shrink]30[shrink][grow]", "[]30[]10[]10[]30[]10[]10[]0[]"));
+        setLayout(new MigLayout("insets 30, fillx", "[shrink]30[shrink][grow]", "[]30[]10[]10[]30[]10[]10[]10[]0[]"));
         getContentPane().setBackground(Color.white);
 
         JLabel logoLabel = new JLabel();
@@ -83,18 +83,24 @@ final class AboutDialog extends JDialog {
         vlcjVersionLabel.setText(resources().getString("dialog.about.vlcjVersion"));
 
         JLabel vlcjVersionValueLabel = new ValueLabel();
-        vlcjVersionValueLabel.setText(Info.getInstance().version().toString());
+        vlcjVersionValueLabel.setText(Info.getInstance().vlcjVersion().toString());
 
         JLabel vlcVersionLabel = new JLabel();
         vlcVersionLabel.setText(resources().getString("dialog.about.vlcVersion"));
 
+        JLabel nativeLibraryPathLabel = new JLabel();
+        nativeLibraryPathLabel.setText(resources().getString("dialog.about.nativeLibraryPath"));
+
+        JLabel nativeLibraryPathValueLabel = new ValueLabel();
+        nativeLibraryPathValueLabel.setText(application().mediaPlayerComponent().getMediaPlayerFactory().nativeLibraryPath());
+
         JLabel vlcVersionValueLabel = new ValueLabel();
-        vlcVersionValueLabel.setText(LibVlcVersion.getVersion().toString());
+        vlcVersionValueLabel.setText(application().mediaPlayerComponent().getMediaPlayerFactory().application().version());
 
         JLabel vlcChangesetValueLabel = new ValueLabel();
-        vlcChangesetValueLabel.setText(LibVlcVersion.getChangeset());
+        vlcChangesetValueLabel.setText(application().mediaPlayerComponent().getMediaPlayerFactory().application().changeset());
 
-        add(logoLabel, "shrink, top, spany 7");
+        add(logoLabel, "shrink, top, spany 8");
         add(applicationLabel, "grow, spanx 2, wrap");
         add(blurb1Label, "grow, spanx 2, wrap");
         add(blurb2Label, "grow, spanx 2, wrap");
@@ -103,6 +109,8 @@ final class AboutDialog extends JDialog {
         add(applicationVersionValueLabel, "wrap");
         add(vlcjVersionLabel);
         add(vlcjVersionValueLabel, "wrap");
+        add(nativeLibraryPathLabel, "");
+        add(nativeLibraryPathValueLabel, "wrap");
         add(vlcVersionLabel);
         add(vlcVersionValueLabel, "wrap");
         add(vlcChangesetValueLabel, "skip 2");

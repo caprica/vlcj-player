@@ -21,7 +21,7 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 final class StereoModeAction extends MediaPlayerAction {

@@ -28,8 +28,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
-import uk.co.caprica.vlcj.player.AudioDevice;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.AudioDevice;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.AudioDeviceAction;
 
@@ -45,7 +45,7 @@ public final class AudioDeviceMenu extends OnDemandMenu {
     protected void onCreateMenu(JMenu menu) {
         MediaPlayer mediaPlayer = application().mediaPlayerComponent().getMediaPlayer();
         ButtonGroup buttonGroup = new ButtonGroup();
-        for (AudioDevice audioDevice : mediaPlayer.getAudioOutputDevices()) {
+        for (AudioDevice audioDevice : mediaPlayer.audio().getAudioOutputDevices()) {
             JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(new AudioDeviceAction(audioDevice, mediaPlayer));
             menuItem.putClientProperty(KEY_AUDIO_DEVICE, audioDevice);
             buttonGroup.add(menuItem);
@@ -55,7 +55,7 @@ public final class AudioDeviceMenu extends OnDemandMenu {
 
     @Override
     protected void onPrepareMenu(JMenu menu) {
-        String audioDeviceId = application().mediaPlayerComponent().getMediaPlayer().getAudioOutputDevice();
+        String audioDeviceId = application().mediaPlayerComponent().getMediaPlayer().audio().getAudioOutputDevice();
         for (Component c : menu.getMenuComponents()) {
             JRadioButtonMenuItem menuItem = (JRadioButtonMenuItem) c;
             AudioDevice audioDevice = (AudioDevice) menuItem.getClientProperty(KEY_AUDIO_DEVICE);

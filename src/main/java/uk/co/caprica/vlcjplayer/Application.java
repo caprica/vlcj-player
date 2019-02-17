@@ -19,23 +19,16 @@
 
 package uk.co.caprica.vlcjplayer;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import javax.swing.SwingUtilities;
-
-import uk.co.caprica.vlcj.binding.internal.libvlc_position_e;
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import com.google.common.eventbus.EventBus;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 
-import com.google.common.eventbus.EventBus;
+import javax.swing.*;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Global application state.
@@ -72,13 +65,13 @@ public final class Application {
 
     private Application() {
         eventBus = new EventBus();
-        mediaPlayerComponent = new EmbeddedMediaPlayerComponent() {
-            @Override
-            protected String[] onGetMediaPlayerFactoryExtraArgs() {
-                return new String[] {"--no-osd"};
-            }
-        };
+
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+
+        mediaPlayerComponent.getMediaPlayer().media().setRepeat(true);
+
         mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.getMediaPlayer());
+
         tickService.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {

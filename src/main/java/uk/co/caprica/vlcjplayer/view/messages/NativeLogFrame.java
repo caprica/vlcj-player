@@ -43,7 +43,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
+import uk.co.caprica.vlcj.log.LogLevel;
 import uk.co.caprica.vlcj.log.LogEventListener;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
@@ -70,7 +70,7 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
     private final JButton clearButton;
 
     private final JLabel levelLabel;
-    private final JComboBox<libvlc_log_level_e> levelComboBox;
+    private final JComboBox<LogLevel> levelComboBox;
     private final JLabel filterLabel;
     private final JTextField filterTextField;
     private final JButton saveAsButton;
@@ -161,7 +161,7 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
             @Override
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
-                    libvlc_log_level_e level = (libvlc_log_level_e) event.getItem();
+                    LogLevel level = (LogLevel) event.getItem();
                     nativeLog.setLevel(level);
                 }
             }
@@ -173,7 +173,7 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
     }
 
     @Override
-    public void log(final libvlc_log_level_e level, final String module, final String file, final Integer line, final String name, final String header, final Integer id, final String message) {
+    public void log(final LogLevel level, final String module, final String file, final Integer line, final String name, final String header, final Integer id, final String message) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -196,7 +196,7 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
         table.getColumnModel().getColumn(1).setPreferredWidth(prefs.getInt("column1Width", 100));
         table.getColumnModel().getColumn(2).setPreferredWidth(prefs.getInt("column2Width", 100));
         table.getColumnModel().getColumn(3).setPreferredWidth(prefs.getInt("column3Width", 250));
-        libvlc_log_level_e level = libvlc_log_level_e.level(prefs.getInt("level", libvlc_log_level_e.ERROR.intValue()));
+        LogLevel level = LogLevel.level(prefs.getInt("level", LogLevel.ERROR.intValue()));
         levelComboBox.setSelectedItem(level);
         nativeLog.setLevel(level);
     }

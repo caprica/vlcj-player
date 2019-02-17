@@ -21,7 +21,7 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 final class StopAction extends MediaPlayerAction {
@@ -32,6 +32,6 @@ final class StopAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.stop();
+        mediaPlayer.controls().stop();
     }
 }

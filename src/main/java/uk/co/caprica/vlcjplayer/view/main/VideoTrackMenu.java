@@ -26,7 +26,7 @@ import java.util.List;
 
 import javax.swing.Action;
 
-import uk.co.caprica.vlcj.player.TrackDescription;
+import uk.co.caprica.vlcj.player.base.TrackDescription;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.VideoTrackAction;
 
 final class VideoTrackMenu extends TrackMenu {
@@ -42,11 +42,11 @@ final class VideoTrackMenu extends TrackMenu {
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayerComponent().getMediaPlayer().getVideoDescriptions();
+        return application().mediaPlayerComponent().getMediaPlayer().video().getVideoDescriptions();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().getMediaPlayer().getVideoTrack();
+        return application().mediaPlayerComponent().getMediaPlayer().video().getVideoTrack();
     }
 }

@@ -22,11 +22,13 @@ package uk.co.caprica.vlcjplayer.view.main;
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Action;
 
-import uk.co.caprica.vlcj.player.TrackDescription;
+import uk.co.caprica.vlcj.player.base.TitleDescription;
+import uk.co.caprica.vlcj.player.base.TrackDescription;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.TitleAction;
 
 final class TitleTrackMenu extends TrackMenu {
@@ -42,11 +44,25 @@ final class TitleTrackMenu extends TrackMenu {
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayerComponent().getMediaPlayer().getTitleDescriptions();
+        // FIXME for now I'll just convert the list... but it should be List<TitleDescription>
+        List<TitleDescription> titles = application().mediaPlayerComponent().getMediaPlayer().titles().getTitleDescriptions();
+        List<TrackDescription> result = new ArrayList<TrackDescription>(titles.size());
+        int id = 0;
+        for (TitleDescription title : titles) {
+            if (!title.isMenu()) {
+                String name = title.getName();
+                if (name == null) {
+                    name = String.format("Feature %d", id+1);
+                }
+                // FIXME use Duration from TitleDescription
+                result.add(new TrackDescription(id++, name));
+            }
+        }
+        return result;
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().getMediaPlayer().getTitle();
+        return application().mediaPlayerComponent().getMediaPlayer().titles().getTitle();
     }
 }

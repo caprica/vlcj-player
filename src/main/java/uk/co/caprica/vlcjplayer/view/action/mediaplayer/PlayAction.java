@@ -21,7 +21,7 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 final class PlayAction extends MediaPlayerAction {
@@ -32,11 +32,11 @@ final class PlayAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!mediaPlayer.isPlaying()) {
-            mediaPlayer.play();
+        if (!mediaPlayer.status().isPlaying()) {
+            mediaPlayer.controls().play();
         }
         else {
-            mediaPlayer.pause();
+            mediaPlayer.controls().pause();
         }
     }
 }

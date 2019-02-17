@@ -21,7 +21,7 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 final class VolumeAction extends MediaPlayerAction {
@@ -35,6 +35,6 @@ final class VolumeAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.setVolume(mediaPlayer.getVolume() + delta);
+        mediaPlayer.audio().setVolume(mediaPlayer.audio().getVolume() + delta);
     }
 }

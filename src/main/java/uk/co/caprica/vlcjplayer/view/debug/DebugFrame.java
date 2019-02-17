@@ -42,7 +42,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcjplayer.event.ShowDebugEvent;
 import uk.co.caprica.vlcjplayer.view.BaseFrame;
 import ca.odell.glazedlists.BasicEventList;
@@ -74,11 +74,11 @@ public final class DebugFrame extends BaseFrame {
         super("Debug Messages");
         this.mediaPlayerComponent = application().mediaPlayerComponent();
         this.mouseEventHandler = new MouseEventHandler();
-        this.mediaPlayerComponent.getVideoSurface().addMouseListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurface().addMouseMotionListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurface().addMouseWheelListener(mouseEventHandler);
+        this.mediaPlayerComponent.getVideoSurfaceComponent().addMouseListener(mouseEventHandler);
+        this.mediaPlayerComponent.getVideoSurfaceComponent().addMouseMotionListener(mouseEventHandler);
+        this.mediaPlayerComponent.getVideoSurfaceComponent().addMouseWheelListener(mouseEventHandler);
 
-        this.mediaPlayerComponent.getVideoSurface().addKeyListener(new KeyEventHandler());
+        this.mediaPlayerComponent.getVideoSurfaceComponent().addKeyListener(new KeyEventHandler());
 
         this.clearAction = new AbstractAction("Clear") {
             @Override
@@ -121,9 +121,9 @@ public final class DebugFrame extends BaseFrame {
 
     @Override
     public void dispose() {
-        this.mediaPlayerComponent.getVideoSurface().removeMouseListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurface().removeMouseMotionListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurface().removeMouseWheelListener(mouseEventHandler);
+        this.mediaPlayerComponent.getVideoSurfaceComponent().removeMouseListener(mouseEventHandler);
+        this.mediaPlayerComponent.getVideoSurfaceComponent().removeMouseMotionListener(mouseEventHandler);
+        this.mediaPlayerComponent.getVideoSurfaceComponent().removeMouseWheelListener(mouseEventHandler);
     }
 
     private class MouseEventHandler extends MouseAdapter {

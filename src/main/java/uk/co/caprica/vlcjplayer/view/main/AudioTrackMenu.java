@@ -26,7 +26,7 @@ import java.util.List;
 
 import javax.swing.Action;
 
-import uk.co.caprica.vlcj.player.TrackDescription;
+import uk.co.caprica.vlcj.player.base.TrackDescription;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.AudioTrackAction;
 
 final class AudioTrackMenu extends TrackMenu {
@@ -42,11 +42,11 @@ final class AudioTrackMenu extends TrackMenu {
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayerComponent().getMediaPlayer().getAudioDescriptions();
+        return application().mediaPlayerComponent().getMediaPlayer().audio().getAudioDescriptions();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().getMediaPlayer().getAudioTrack();
+        return application().mediaPlayerComponent().getMediaPlayer().audio().getAudioTrack();
     }
 }

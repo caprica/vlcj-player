@@ -27,7 +27,8 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.ChapterDescription;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.ChapterAction;
 
@@ -42,11 +43,18 @@ final class ChapterMenu extends OnDemandMenu {
     @Override
     protected void onPrepareMenu(JMenu menu) {
         MediaPlayer mediaPlayer = application().mediaPlayerComponent().getMediaPlayer();
-        List<String> chapters = mediaPlayer.getChapterDescriptions();
+        List<ChapterDescription> chapters = mediaPlayer.chapters().getChapterDescriptions();
         if (chapters != null && !chapters.isEmpty()) {
             int i = 0;
-            for (String chapter : chapters) {
-                JMenuItem menuItem = new JMenuItem(new ChapterAction(chapter, mediaPlayer, i++));
+            for (ChapterDescription chapter : chapters) {
+                String name = chapter.getName();
+                if (name == null) {
+                    name = String.format("Chapter %02d", i+1);
+                }
+                long offset = chapter.getOffset() / 1000 / 60;
+                long duration = chapter.getDuration() / 1000 / 60;
+                String s = String.format("%s %dm (%dm)", name, offset, duration);
+                JMenuItem menuItem = new JMenuItem(new ChapterAction(s, mediaPlayer, i++));
                 menu.add(menuItem);
             }
         }

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 

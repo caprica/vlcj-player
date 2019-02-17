@@ -26,7 +26,7 @@ import java.util.List;
 
 import javax.swing.Action;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import com.google.common.collect.ImmutableList;
 

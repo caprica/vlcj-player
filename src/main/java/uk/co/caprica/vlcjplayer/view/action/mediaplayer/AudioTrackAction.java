@@ -21,7 +21,7 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 public final class AudioTrackAction extends MediaPlayerAction {
 
@@ -34,6 +34,6 @@ public final class AudioTrackAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.setAudioTrack(trackId);
+        mediaPlayer.audio().setAudioTrack(trackId);
     }
 }

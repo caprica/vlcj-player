@@ -19,30 +19,26 @@
 
 package uk.co.caprica.vlcjplayer;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+import uk.co.caprica.nativestreams.NativeStreams;
+import uk.co.caprica.vlcj.support.Info;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import uk.co.caprica.vlcj.runtime.streams.NativeStreams;
+import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
+import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
+import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
 import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
 import uk.co.caprica.vlcjplayer.view.debug.DebugFrame;
 import uk.co.caprica.vlcjplayer.view.effects.EffectsFrame;
 import uk.co.caprica.vlcjplayer.view.main.MainFrame;
 import uk.co.caprica.vlcjplayer.view.messages.NativeLogFrame;
 
-import com.sun.jna.NativeLibrary;
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 /**
  * Application entry-point.
@@ -78,19 +74,37 @@ public class VlcjPlayer {
     private final NativeLog nativeLog;
 
     public static void main(String[] args) throws InterruptedException {
-        // This will locate LibVLC for the vast majority of cases
-        new NativeDiscovery().discover();
+        Info info = Info.getInstance();
+
+        System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
+        System.out.printf("os               : %s%n", val(info.os()));
+        System.out.printf("java             : %s%n", val(info.javaVersion()));
+        System.out.printf("java.home        : %s%n", val(info.javaHome()));
+        System.out.printf("jna.library.path : %s%n", val(info.jnaLibraryPath()));
+        System.out.printf("java.library.path: %s%n", val(info.javaLibraryPath()));
+        System.out.printf("PATH             : %s%n", val(info.path()));
+        System.out.printf("VLC_PLUGIN_PATH  : %s%n", val(info.pluginPath()));
+
+        if (RuntimeUtil.isNix()) {
+            System.out.printf("LD_LIBRARY_PATH  : %s%n", val(info.ldLibraryPath()));
+        } else if (RuntimeUtil.isMac()) {
+            System.out.printf("DYLD_LIBRARY_PATH          : %s%n", val(info.dyldLibraryPath()));
+            System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", val(info.dyldFallbackLibraryPath()));
+        }
 
         setLookAndFeel();
-
-        app = new VlcjPlayer();
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                app = new VlcjPlayer();
                 app.start();
             }
         });
+    }
+
+    private static String val(String val) {
+        return val != null ? val : "<not set>";
     }
 
     private static void setLookAndFeel() {
@@ -112,11 +126,13 @@ public class VlcjPlayer {
     public VlcjPlayer() {
         EmbeddedMediaPlayerComponent mediaPlayerComponent = application().mediaPlayerComponent();
 
+//        mediaPlayerComponent.getMediaPlayer().media().setRepeat(true);
+
         mainFrame = new MainFrame();
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                mediaPlayerComponent.getMediaPlayer().stop();
+                mediaPlayerComponent.getMediaPlayer().controls().stop();
                 mediaPlayerComponent.release();
                 if (nativeStreams != null) {
                     nativeStreams.release();
@@ -131,9 +147,20 @@ public class VlcjPlayer {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
-        embeddedMediaPlayer.setFullScreenStrategy(new VlcjPlayerFullScreenStrategy(mainFrame));
+        embeddedMediaPlayer.fullScreen().setFullScreenStrategy(new VlcjPlayerFullScreenStrategy(mainFrame));
+        embeddedMediaPlayer.fullScreen().setFullScreenStrategy(new ExclusiveModeFullScreenStrategy(mainFrame) {
+            @Override
+            protected void onBeforeEnterFullScreenMode() {
+                application().post(BeforeEnterFullScreenEvent.INSTANCE);
+            }
 
-        nativeLog = mediaPlayerComponent.getMediaPlayerFactory().newLog();
+            @Override
+            protected void onAfterExitFullScreenMode() {
+                application().post(AfterExitFullScreenEvent.INSTANCE);
+            }
+        });
+
+        nativeLog = mediaPlayerComponent.getMediaPlayerFactory().application().newLog();
 
         messagesFrame = new NativeLogFrame(nativeLog);
         effectsFrame = new EffectsFrame();

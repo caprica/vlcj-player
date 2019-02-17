@@ -21,7 +21,7 @@ package uk.co.caprica.vlcjplayer.view.main;
 
 import java.awt.Component;
 
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcjplayer.view.MouseMovementDetector;
 
 final class VideoMouseMovementDetector extends MouseMovementDetector {

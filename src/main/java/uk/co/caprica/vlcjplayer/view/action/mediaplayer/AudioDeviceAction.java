@@ -21,8 +21,8 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.AudioDevice;
-import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.AudioDevice;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 public final class AudioDeviceAction extends MediaPlayerAction {
 
@@ -35,6 +35,6 @@ public final class AudioDeviceAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.setAudioOutputDevice(null, audioDevice.getDeviceId());
+        mediaPlayer.audio().setAudioOutputDevice(null, audioDevice.getDeviceId());
     }
 }

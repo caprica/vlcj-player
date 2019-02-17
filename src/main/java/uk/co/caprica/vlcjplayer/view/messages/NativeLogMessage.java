@@ -19,16 +19,16 @@
 
 package uk.co.caprica.vlcjplayer.view.messages;
 
-import uk.co.caprica.vlcj.binding.internal.libvlc_log_level_e;
+import uk.co.caprica.vlcj.log.LogLevel;
 
 final class NativeLogMessage {
 
     private final String module;
     private final String name;
-    private final libvlc_log_level_e level;
+    private final LogLevel level;
     private final String message;
 
-    NativeLogMessage(String module, String name, libvlc_log_level_e level, String message) {
+    NativeLogMessage(String module, String name, LogLevel level, String message) {
         this.module = module;
         this.name = name;
         this.level = level;
@@ -43,7 +43,7 @@ final class NativeLogMessage {
         return name;
     }
 
-    public libvlc_log_level_e getLevel() {
+    public LogLevel getLevel() {
         return level;
     }
 
