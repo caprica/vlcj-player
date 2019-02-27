@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.swing.Action;
 
+import uk.co.caprica.vlcj.player.base.AudioChannel;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import com.google.common.collect.ImmutableList;
@@ -103,10 +104,14 @@ public final class MediaPlayerActions {
 
     private List<Action> newAudioStereoModeActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo" ), mediaPlayer, null));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"   ), mediaPlayer, null));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"  ), mediaPlayer, null));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"), mediaPlayer, null));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), mediaPlayer, AudioChannel.UNSET));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), mediaPlayer, AudioChannel.STEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), mediaPlayer, AudioChannel.LEFT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), mediaPlayer, AudioChannel.RIGHT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), mediaPlayer, AudioChannel.RSTEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), mediaPlayer, AudioChannel.DOLBYS));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), mediaPlayer, AudioChannel.HEADPHONES));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), mediaPlayer, AudioChannel.MONO));
         return ImmutableList.copyOf(actions);
     }
 

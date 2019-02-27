@@ -21,21 +21,21 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
+import uk.co.caprica.vlcj.player.base.AudioChannel;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 final class StereoModeAction extends MediaPlayerAction {
 
-    private final Object mode;
+    private final AudioChannel mode;
 
-    StereoModeAction(Resource resource, MediaPlayer mediaPlayer, Object mode) {
+    StereoModeAction(Resource resource, MediaPlayer mediaPlayer, AudioChannel mode) {
         super(resource, mediaPlayer);
         this.mode = mode;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // FIXME
-        // setChannel?
+        System.out.println("SET CHANNEL: " + mediaPlayer.audio().setChannel(mode));
     }
 }

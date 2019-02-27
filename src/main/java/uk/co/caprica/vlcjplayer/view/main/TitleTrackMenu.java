@@ -39,18 +39,18 @@ final class TitleTrackMenu extends TrackMenu {
 
     @Override
     protected Action createAction(TrackDescription trackDescription) {
-        return new TitleAction(trackDescription.description(), application().mediaPlayerComponent().getMediaPlayer(), trackDescription.id());
+        return new TitleAction(trackDescription.description(), application().mediaPlayerComponent().mediaPlayer(), trackDescription.id());
     }
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
         // FIXME for now I'll just convert the list... but it should be List<TitleDescription>
-        List<TitleDescription> titles = application().mediaPlayerComponent().getMediaPlayer().titles().getTitleDescriptions();
+        List<TitleDescription> titles = application().mediaPlayerComponent().mediaPlayer().titles().titleDescriptions();
         List<TrackDescription> result = new ArrayList<TrackDescription>(titles.size());
         int id = 0;
         for (TitleDescription title : titles) {
             if (!title.isMenu()) {
-                String name = title.getName();
+                String name = title.name();
                 if (name == null) {
                     name = String.format("Feature %d", id+1);
                 }
@@ -63,6 +63,6 @@ final class TitleTrackMenu extends TrackMenu {
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().getMediaPlayer().titles().getTitle();
+        return application().mediaPlayerComponent().mediaPlayer().titles().title();
     }
 }

@@ -99,7 +99,7 @@ final class PositionPane extends JPanel {
         timeLabel.setText(formatTime(time));
 
         if (!sliderChanging.get()) {
-            int value = (int) (mediaPlayer.status().getPosition() * 1000.0f);
+            int value = (int) (mediaPlayer.status().position() * 1000.0f);
             positionChanging.set(true);
             positionSlider.setValue(value);
             positionChanging.set(false);

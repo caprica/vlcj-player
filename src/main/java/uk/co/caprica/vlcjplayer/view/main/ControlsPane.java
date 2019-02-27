@@ -120,7 +120,7 @@ final class ControlsPane extends BasePanel {
         volumeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                application().mediaPlayerComponent().getMediaPlayer().audio().setVolume(volumeSlider.getValue());
+                application().mediaPlayerComponent().mediaPlayer().audio().setVolume(volumeSlider.getValue());
             }
         });
 
@@ -129,14 +129,14 @@ final class ControlsPane extends BasePanel {
         muteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                application().mediaPlayerComponent().getMediaPlayer().audio().mute();
+                application().mediaPlayerComponent().mediaPlayer().audio().mute();
             }
         });
 
         fullscreenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                application().mediaPlayerComponent().getMediaPlayer().fullScreen().toggleFullScreen();
+                application().mediaPlayerComponent().mediaPlayer().fullScreen().toggle();
             }
         });
 

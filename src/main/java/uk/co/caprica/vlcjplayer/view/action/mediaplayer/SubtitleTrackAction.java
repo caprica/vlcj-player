@@ -34,6 +34,6 @@ public final class SubtitleTrackAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.subpictures().setSpu(trackId);
+        mediaPlayer.subpictures().setTrack(trackId);
     }
 }

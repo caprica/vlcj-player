@@ -92,13 +92,13 @@ final class AboutDialog extends JDialog {
         nativeLibraryPathLabel.setText(resources().getString("dialog.about.nativeLibraryPath"));
 
         JLabel nativeLibraryPathValueLabel = new ValueLabel();
-        nativeLibraryPathValueLabel.setText(application().mediaPlayerComponent().getMediaPlayerFactory().nativeLibraryPath());
+        nativeLibraryPathValueLabel.setText(application().mediaPlayerComponent().mediaPlayerFactory().nativeLibraryPath());
 
         JLabel vlcVersionValueLabel = new ValueLabel();
-        vlcVersionValueLabel.setText(application().mediaPlayerComponent().getMediaPlayerFactory().application().version());
+        vlcVersionValueLabel.setText(application().mediaPlayerComponent().mediaPlayerFactory().application().version());
 
         JLabel vlcChangesetValueLabel = new ValueLabel();
-        vlcChangesetValueLabel.setText(application().mediaPlayerComponent().getMediaPlayerFactory().application().changeset());
+        vlcChangesetValueLabel.setText(application().mediaPlayerComponent().mediaPlayerFactory().application().changeset());
 
         add(logoLabel, "shrink, top, spany 8");
         add(applicationLabel, "grow, spanx 2, wrap");

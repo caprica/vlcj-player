@@ -53,6 +53,7 @@ public abstract class OnDemandMenu implements MenuListener {
             menu.removeAll();
         }
         onPrepareMenu(menu);
+        menu.setEnabled(menu.getItemCount() > 0);
     }
 
     @Override

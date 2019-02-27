@@ -30,4 +30,5 @@ final class VideoContentPane extends JPanel {
     public void showVideo() {
         cardLayout.show(this, NAME_VIDEO);
     }
+
 }

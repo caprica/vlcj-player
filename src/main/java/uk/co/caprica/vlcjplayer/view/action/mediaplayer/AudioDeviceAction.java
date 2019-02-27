@@ -35,6 +35,6 @@ public final class AudioDeviceAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.audio().setAudioOutputDevice(null, audioDevice.getDeviceId());
+        mediaPlayer.audio().setOutputDevice(null, audioDevice.getDeviceId());
     }
 }

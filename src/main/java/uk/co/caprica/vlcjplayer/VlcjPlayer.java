@@ -20,6 +20,12 @@
 package uk.co.caprica.vlcjplayer;
 
 import uk.co.caprica.nativestreams.NativeStreams;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
+import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
+import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcj.support.Info;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
@@ -28,6 +34,8 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
 import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
 import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
+import uk.co.caprica.vlcjplayer.event.RendererAddedEvent;
+import uk.co.caprica.vlcjplayer.event.RendererDeletedEvent;
 import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
 import uk.co.caprica.vlcjplayer.view.debug.DebugFrame;
 import uk.co.caprica.vlcjplayer.view.effects.EffectsFrame;
@@ -35,15 +43,18 @@ import uk.co.caprica.vlcjplayer.view.main.MainFrame;
 import uk.co.caprica.vlcjplayer.view.messages.NativeLogFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
 
 /**
  * Application entry-point.
  */
-public class VlcjPlayer {
+public class VlcjPlayer implements RendererDiscovererEventListener {
 
     private static VlcjPlayer app;
 
@@ -59,6 +70,10 @@ public class VlcjPlayer {
             nativeStreams = null;
 //        }
     }
+
+    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
+
+    private final List<RendererDiscoverer> rendererDiscoverers = new ArrayList<>();
 
     private final JFrame mainFrame;
 
@@ -94,13 +109,13 @@ public class VlcjPlayer {
 
         setLookAndFeel();
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
                 app = new VlcjPlayer();
                 app.start();
-            }
-        });
+//            }
+//        });
     }
 
     private static String val(String val) {
@@ -124,15 +139,19 @@ public class VlcjPlayer {
     }
 
     public VlcjPlayer() {
-        EmbeddedMediaPlayerComponent mediaPlayerComponent = application().mediaPlayerComponent();
+        mediaPlayerComponent = application().mediaPlayerComponent();
 
-//        mediaPlayerComponent.getMediaPlayer().media().setRepeat(true);
+        prepareDiscoverers();
 
         mainFrame = new MainFrame();
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                mediaPlayerComponent.getMediaPlayer().controls().stop();
+                for (RendererDiscoverer discoverer : rendererDiscoverers) {
+                    discoverer.stop();
+                }
+
+                mediaPlayerComponent.mediaPlayer().controls().stop();
                 mediaPlayerComponent.release();
                 if (nativeStreams != null) {
                     nativeStreams.release();
@@ -146,28 +165,48 @@ public class VlcjPlayer {
         });
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        final EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
-        embeddedMediaPlayer.fullScreen().setFullScreenStrategy(new VlcjPlayerFullScreenStrategy(mainFrame));
-        embeddedMediaPlayer.fullScreen().setFullScreenStrategy(new ExclusiveModeFullScreenStrategy(mainFrame) {
-            @Override
-            protected void onBeforeEnterFullScreenMode() {
-                application().post(BeforeEnterFullScreenEvent.INSTANCE);
-            }
+        final EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.mediaPlayer();
+        embeddedMediaPlayer.fullScreen().strategy(new VlcjPlayerFullScreenStrategy(mainFrame));
 
-            @Override
-            protected void onAfterExitFullScreenMode() {
-                application().post(AfterExitFullScreenEvent.INSTANCE);
-            }
-        });
-
-        nativeLog = mediaPlayerComponent.getMediaPlayerFactory().application().newLog();
+        nativeLog = mediaPlayerComponent.mediaPlayerFactory().application().newLog();
 
         messagesFrame = new NativeLogFrame(nativeLog);
         effectsFrame = new EffectsFrame();
         debugFrame = new DebugFrame();
+
+        mediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+                System.out.println("TEST LISTENER READY!");
+            }
+        });
     }
 
     private void start() {
         mainFrame.setVisible(true);
+
+        for (RendererDiscoverer discoverer : rendererDiscoverers) {
+            discoverer.start();
+        }
     }
+
+    private void prepareDiscoverers() {
+        for (RendererDiscovererDescription descriptions : mediaPlayerComponent.mediaPlayerFactory().renderers().discoverers()) {
+            RendererDiscoverer discoverer = mediaPlayerComponent.mediaPlayerFactory().renderers().discoverer(descriptions.name());
+            discoverer.events().addRendererDiscovererEventListener(this);
+            rendererDiscoverers.add(discoverer);
+        }
+
+    }
+
+    @Override
+    public void rendererDiscovererItemAdded(RendererDiscoverer rendererDiscoverer, RendererItem itemAdded) {
+        application().post(new RendererAddedEvent(itemAdded));
+    }
+
+    @Override
+    public void rendererDiscovererItemDeleted(RendererDiscoverer rendererDiscoverer, RendererItem itemDeleted) {
+        application().post(new RendererDeletedEvent(itemDeleted));
+    }
+
 }

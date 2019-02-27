@@ -66,10 +66,10 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
     public EqualizerPanel() {
         this.mediaPlayerComponent = application().mediaPlayerComponent();
 
-        this.equalizer = mediaPlayerComponent.getMediaPlayerFactory().equalizers().newEqualizer();
+        this.equalizer = mediaPlayerComponent.mediaPlayerFactory().equalizers().newEqualizer();
 
-        List<Float> list = mediaPlayerComponent.getMediaPlayerFactory().equalizers().bands();
-        List<String> presets = mediaPlayerComponent.getMediaPlayerFactory().equalizers().presets();
+        List<Float> list = mediaPlayerComponent.mediaPlayerFactory().equalizers().bands();
+        List<String> presets = mediaPlayerComponent.mediaPlayerFactory().equalizers().presets();
 
         JPanel bandsPane = new JPanel();
         bandsPane.setLayout(new GridLayout(1, 1 + list.size(), 2, 0));
@@ -140,7 +140,7 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
     @Override
     public final void actionPerformed(ActionEvent e) {
         boolean enable = enableCheckBox.isSelected();
-        mediaPlayerComponent.getMediaPlayer().audio().setEqualizer(enable ? equalizer : null);
+        mediaPlayerComponent.mediaPlayer().audio().setEqualizer(enable ? equalizer : null);
         enableControls(enable);
     }
 
@@ -169,11 +169,11 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
         String presetName = (String) presetComboBox.getSelectedItem();
         if (e.getStateChange() == ItemEvent.SELECTED) {
             if (presetName != null) {
-                Equalizer presetEqualizer = mediaPlayerComponent.getMediaPlayerFactory().equalizers().newEqualizer(presetName);
+                Equalizer presetEqualizer = mediaPlayerComponent.mediaPlayerFactory().equalizers().newEqualizer(presetName);
                 if (presetEqualizer != null) {
                     applyingPreset = true;
-                    preampControl.getSlider().setValue((int) (presetEqualizer.getPreamp() * 100f));
-                    float[] amps = presetEqualizer.getAmps();
+                    preampControl.getSlider().setValue((int) (presetEqualizer.preamp() * 100f));
+                    float[] amps = presetEqualizer.amps();
                     for (int i = 0; i < amps.length; i++) {
                         bandControls[i].getSlider().setValue((int) (amps[i] * 100f));
                     }

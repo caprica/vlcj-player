@@ -74,11 +74,11 @@ public final class DebugFrame extends BaseFrame {
         super("Debug Messages");
         this.mediaPlayerComponent = application().mediaPlayerComponent();
         this.mouseEventHandler = new MouseEventHandler();
-        this.mediaPlayerComponent.getVideoSurfaceComponent().addMouseListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurfaceComponent().addMouseMotionListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurfaceComponent().addMouseWheelListener(mouseEventHandler);
+        this.mediaPlayerComponent.videoSurfaceComponent().addMouseListener(mouseEventHandler);
+        this.mediaPlayerComponent.videoSurfaceComponent().addMouseMotionListener(mouseEventHandler);
+        this.mediaPlayerComponent.videoSurfaceComponent().addMouseWheelListener(mouseEventHandler);
 
-        this.mediaPlayerComponent.getVideoSurfaceComponent().addKeyListener(new KeyEventHandler());
+        this.mediaPlayerComponent.videoSurfaceComponent().addKeyListener(new KeyEventHandler());
 
         this.clearAction = new AbstractAction("Clear") {
             @Override
@@ -121,9 +121,9 @@ public final class DebugFrame extends BaseFrame {
 
     @Override
     public void dispose() {
-        this.mediaPlayerComponent.getVideoSurfaceComponent().removeMouseListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurfaceComponent().removeMouseMotionListener(mouseEventHandler);
-        this.mediaPlayerComponent.getVideoSurfaceComponent().removeMouseWheelListener(mouseEventHandler);
+        this.mediaPlayerComponent.videoSurfaceComponent().removeMouseListener(mouseEventHandler);
+        this.mediaPlayerComponent.videoSurfaceComponent().removeMouseMotionListener(mouseEventHandler);
+        this.mediaPlayerComponent.videoSurfaceComponent().removeMouseWheelListener(mouseEventHandler);
     }
 
     private class MouseEventHandler extends MouseAdapter {

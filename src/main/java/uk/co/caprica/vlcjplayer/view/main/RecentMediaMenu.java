@@ -62,7 +62,10 @@ final class RecentMediaMenu extends OnDemandMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            application().mediaPlayerComponent().getMediaPlayer().media().play(mrl);
+            // FIXME something odd going on when using renderer (e.g. chromecast), if you play again while it's already casting you get an error callback
+            //       and this thread actually seems to die if you invoke stop first, i.e. single step the stop call and it executes but never returns
+            //       but if you press the stop button first, it seems ok...
+            application().mediaPlayerComponent().mediaPlayer().media().play(mrl);
         }
     }
 

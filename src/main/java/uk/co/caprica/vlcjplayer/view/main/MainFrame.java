@@ -29,10 +29,12 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
@@ -63,10 +65,13 @@ import uk.co.caprica.vlcj.player.base.Logo;
 import uk.co.caprica.vlcj.player.base.Marquee;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
 import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
 import uk.co.caprica.vlcjplayer.event.PausedEvent;
 import uk.co.caprica.vlcjplayer.event.PlayingEvent;
+import uk.co.caprica.vlcjplayer.event.RendererAddedEvent;
+import uk.co.caprica.vlcjplayer.event.RendererDeletedEvent;
 import uk.co.caprica.vlcjplayer.event.ShowDebugEvent;
 import uk.co.caprica.vlcjplayer.event.ShowEffectsEvent;
 import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
@@ -76,6 +81,7 @@ import uk.co.caprica.vlcjplayer.view.BaseFrame;
 import uk.co.caprica.vlcjplayer.view.MouseMovementDetector;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.RendererAction;
 import uk.co.caprica.vlcjplayer.view.snapshot.SnapshotView;
 
 import com.google.common.eventbus.Subscribe;
@@ -93,6 +99,8 @@ public final class MainFrame extends BaseFrame {
 
     private final Action mediaOpenAction;
     private final Action mediaQuitAction;
+
+    private final Action playbackRendererLocalAction;
 
     private final StandardAction videoFullscreenAction;
     private final StandardAction videoAlwaysOnTopAction;
@@ -115,6 +123,7 @@ public final class MainFrame extends BaseFrame {
     private final JMenu playbackMenu;
     private final JMenu playbackTitleMenu;
     private final JMenu playbackChapterMenu;
+    private final JMenu playbackRendererMenu;
     private final JMenu playbackSpeedMenu;
 
     private final JMenu audioMenu;
@@ -151,6 +160,8 @@ public final class MainFrame extends BaseFrame {
 
     private final MouseMovementDetector mouseMovementDetector;
 
+    private final List<RendererItem> renderers = new ArrayList<>();
+
     public MainFrame() {
         super("vlcj player");
 
@@ -165,7 +176,7 @@ public final class MainFrame extends BaseFrame {
                     File file = fileChooser.getSelectedFile();
                     String mrl = file.getAbsolutePath();
                     application().addRecentMedia(mrl);
-                    mediaPlayerComponent.getMediaPlayer().media().play(mrl);
+                    mediaPlayerComponent.mediaPlayer().media().play(mrl);
                 }
             }
         };
@@ -178,10 +189,17 @@ public final class MainFrame extends BaseFrame {
             }
         };
 
+        playbackRendererLocalAction = new StandardAction(resource("menu.playback.item.renderer.item.local")) {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mediaPlayerComponent.mediaPlayer().setRenderer(null);
+            }
+        };
+
         videoFullscreenAction = new StandardAction(resource("menu.video.item.fullscreen")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayerComponent.getMediaPlayer().fullScreen().toggleFullScreen();
+                mediaPlayerComponent.mediaPlayer().fullScreen().toggle();
             }
         };
 
@@ -208,7 +226,7 @@ public final class MainFrame extends BaseFrame {
                     File file = fileChooser.getSelectedFile();
 //                    mediaPlayerComponent.getMediaPlayer().subpictures().setSubTitleFile(file);
                     // FIXME flawed on Windows because of \\ vs /
-                    mediaPlayerComponent.getMediaPlayer().slave().addSlave(MediaSlaveType.SUBTITLE, String.format("file://%s", file.getAbsolutePath()), true);
+                    mediaPlayerComponent.mediaPlayer().media().addSlave(MediaSlaveType.SUBTITLE, String.format("file://%s", file.getAbsolutePath()), true);
                 }
             }
         };
@@ -287,9 +305,16 @@ public final class MainFrame extends BaseFrame {
         playbackMenu.add(playbackTitleMenu);
 
         playbackChapterMenu = new ChapterMenu().menu();
-
         playbackMenu.add(playbackChapterMenu);
         playbackMenu.add(new JSeparator());
+
+        playbackRendererMenu = new JMenu(resource("menu.playback.item.renderer").name());
+        playbackRendererMenu.setMnemonic(resource("menu.playback.item.renderer").mnemonic());
+        playbackRendererMenu.add(new JMenuItem(playbackRendererLocalAction));
+        playbackMenu.add(playbackRendererMenu);
+
+        playbackMenu.add(new JSeparator());
+
         playbackSpeedMenu = new JMenu(resource("menu.playback.item.speed").name());
         playbackSpeedMenu.setMnemonic(resource("menu.playback.item.speed").mnemonic());
         for (Action action : mediaPlayerActions.playbackSpeedActions()) {
@@ -326,6 +351,7 @@ public final class MainFrame extends BaseFrame {
         audioStereoMenu = new JMenu(resource("menu.audio.item.stereoMode").name());
         audioStereoMenu.setMnemonic(resource("menu.audio.item.stereoMode").mnemonic());
         for (Action action : mediaPlayerActions.audioStereoModeActions()) {
+            // FIXME the radio buttons are not clearing when the selection changes
             audioStereoMenu.add(new JRadioButtonMenuItem(action));
         }
         audioMenu.add(audioStereoMenu);
@@ -398,7 +424,7 @@ public final class MainFrame extends BaseFrame {
         contentPane.setTransferHandler(new MediaTransferHandler() {
             @Override
             protected void onMediaDropped(String[] uris) {
-                mediaPlayerComponent.getMediaPlayer().media().play(uris[0]);
+                mediaPlayerComponent.mediaPlayer().media().play(uris[0]);
             }
         });
 
@@ -412,7 +438,7 @@ public final class MainFrame extends BaseFrame {
         JPanel bottomControlsPane = new JPanel();
         bottomControlsPane.setLayout(new MigLayout("fill, insets 0 n n n", "[grow]", "[]0[]"));
 
-        positionPane = new PositionPane(mediaPlayerComponent.getMediaPlayer());
+        positionPane = new PositionPane(mediaPlayerComponent.mediaPlayer());
         bottomControlsPane.add(positionPane, "grow, wrap");
 
         controlsPane = new ControlsPane(mediaPlayerActions);
@@ -424,7 +450,7 @@ public final class MainFrame extends BaseFrame {
 
         contentPane.add(bottomPane, BorderLayout.SOUTH);
 
-        mediaPlayerComponent.getMediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        mediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 
             @Override
             public void playing(MediaPlayer mediaPlayer) {
@@ -481,7 +507,8 @@ public final class MainFrame extends BaseFrame {
                         videoContentPane.showDefault();
                         mouseMovementDetector.stop();
                         application().post(StoppedEvent.INSTANCE);
-                        JOptionPane.showMessageDialog(MainFrame.this, MessageFormat.format(resources().getString("error.errorEncountered"), fileChooser.getSelectedFile().toString()), resources().getString("dialog.errorEncountered"), JOptionPane.ERROR_MESSAGE);
+                        File selectedFile = fileChooser.getSelectedFile(); // FIXME this is flawed with recent file menu
+                        JOptionPane.showMessageDialog(MainFrame.this, MessageFormat.format(resources().getString("error.errorEncountered"), selectedFile != null ? selectedFile.getAbsolutePath() : ""), resources().getString("dialog.errorEncountered"), JOptionPane.ERROR_MESSAGE);
                     }
                 });
             }
@@ -526,18 +553,18 @@ public final class MainFrame extends BaseFrame {
         getActionMap().put(ACTION_EXIT_FULLSCREEN, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediaPlayerComponent.getMediaPlayer().fullScreen().toggleFullScreen();
+                mediaPlayerComponent.mediaPlayer().fullScreen().toggle();
                 videoFullscreenAction.select(false);
             }
         });
 
         applyPreferences();
 
-        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.getVideoSurfaceComponent(), 500, mediaPlayerComponent);
+        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.videoSurfaceComponent(), 500, mediaPlayerComponent);
 
         setMinimumSize(new Dimension(370, 240));
 
-        setLogoAndMarquee(mediaPlayerComponent.getMediaPlayer());
+        setLogoAndMarquee(mediaPlayerComponent.mediaPlayer());
     }
 
     private ButtonGroup addActions(List<Action> actions, JMenu menu, boolean selectFirst) {
@@ -638,6 +665,44 @@ public final class MainFrame extends BaseFrame {
         new SnapshotView(event.image());
     }
 
+    @Subscribe
+    public void onRendererAdded(RendererAddedEvent event) {
+        synchronized (renderers) {
+            renderers.add(event.rendererItem());
+        }
+        updateRenderersMenu();
+    }
+
+    @Subscribe
+    public void onRendererDeleted(RendererDeletedEvent event) {
+        synchronized (renderers) {
+            for (RendererItem renderer : renderers) {
+                if (renderer.rendererItemInstance().equals(event.rendererItem().rendererItemInstance())) {
+                    renderers.remove(renderer);
+                    break;
+                }
+            }
+        }
+        updateRenderersMenu();
+    }
+
+    private void updateRenderersMenu() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (renderers) {
+                    for (int i = 1; i < playbackRendererMenu.getItemCount(); i++) {
+                        playbackRendererMenu.remove(i);
+                    }
+
+                    for (RendererItem renderer : renderers) {
+                        playbackRendererMenu.add(new RendererAction(renderer.name(), renderer));
+                    }
+                }
+            }
+        });
+    }
+
     private void registerEscapeBinding() {
         getInputMap().put(KEYSTROKE_ESCAPE, ACTION_EXIT_FULLSCREEN);
         getInputMap().put(KEYSTROKE_TOGGLE_FULLSCREEN, ACTION_EXIT_FULLSCREEN);
@@ -665,7 +730,7 @@ public final class MainFrame extends BaseFrame {
                 .opacity(0.5f)
                 .enable();
 
-        mediaPlayer.logo().setLogo(logo);
+        mediaPlayer.logo().set(logo);
 
         Marquee marquee = Marquee.marquee()
                 .text(String.format("vlcj-player"))
@@ -675,7 +740,7 @@ public final class MainFrame extends BaseFrame {
                 .location(10,5)
                 .enable();
 
-        mediaPlayer.marquee().setMarquee(marquee);
+        mediaPlayer.marquee().set(marquee);
     }
 
 }

@@ -49,7 +49,7 @@ public final class Resource {
     public Integer mnemonic() {
         String key = id + ".mnemonic";
         if (resources().containsKey(key)) {
-            return new Integer(resources().getString(key).charAt(0));
+            return Integer.valueOf(resources().getString(key).charAt(0));
         }
         else {
             return null;

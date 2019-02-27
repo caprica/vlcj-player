@@ -21,6 +21,7 @@ package uk.co.caprica.vlcjplayer;
 
 import com.google.common.eventbus.EventBus;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 
@@ -68,7 +69,7 @@ public final class Application {
 
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 
-        mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.getMediaPlayer());
+        mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.mediaPlayer());
 
         tickService.scheduleWithFixedDelay(new Runnable() {
             @Override
@@ -121,4 +122,9 @@ public final class Application {
     public void clearRecentMedia() {
         recentMedia.clear();
     }
+
+    public void setRenderer(RendererItem renderer) {
+        mediaPlayerComponent.mediaPlayer().setRenderer(renderer);
+    }
+
 }

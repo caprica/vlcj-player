@@ -35,10 +35,13 @@ abstract class MediaTransferHandler extends TransferHandler {
 
     private final DataFlavor javaFileListFlavor;
 
+    private final DataFlavor stringFlavor;
+
     MediaTransferHandler() {
         uriListFlavor = newDataFlavor("text/uri-list;class=java.lang.String");
         javaUrlFlavor = newDataFlavor("application/x-java-url;class=java.net.URL");
         javaFileListFlavor = DataFlavor.javaFileListFlavor;
+        stringFlavor = DataFlavor.stringFlavor;
     }
 
     private DataFlavor newDataFlavor(String mimeType) {
@@ -100,6 +103,9 @@ abstract class MediaTransferHandler extends TransferHandler {
         }
         if (support.isDataFlavorSupported(javaFileListFlavor)) {
             return javaFileListFlavor;
+        }
+        if (support.isDataFlavorSupported(stringFlavor)) {
+            return stringFlavor;
         }
         return null;
     }

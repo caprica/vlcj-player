@@ -19,19 +19,33 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
+import uk.co.caprica.vlcjplayer.view.action.StandardAction;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.net.URL;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
-final class PreviousChapterAction extends MediaPlayerAction {
+public final class RendererAction extends StandardAction {
 
-    PreviousChapterAction(Resource resource, MediaPlayer mediaPlayer) {
-        super(resource, mediaPlayer);
+    private final RendererItem renderer;
+
+    public RendererAction(String name, RendererItem renderer) {
+        super(name);
+        this.renderer = renderer;
+        try {
+            putValue(Action.SMALL_ICON, new ImageIcon(ImageIO.read(new URL(renderer.iconUri()))));
+        }
+        catch (IOException e) {
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.chapters().previous();
+        application().setRenderer(renderer);
     }
 }

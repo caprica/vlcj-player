@@ -35,6 +35,6 @@ final class VolumeAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.audio().setVolume(mediaPlayer.audio().getVolume() + delta);
+        mediaPlayer.audio().setVolume(mediaPlayer.audio().volume() + delta);
     }
 }

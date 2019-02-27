@@ -34,6 +34,6 @@ public final class AudioTrackAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.audio().setAudioTrack(trackId);
+        mediaPlayer.audio().setTrack(trackId);
     }
 }

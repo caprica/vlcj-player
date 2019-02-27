@@ -42,17 +42,17 @@ final class ChapterMenu extends OnDemandMenu {
 
     @Override
     protected void onPrepareMenu(JMenu menu) {
-        MediaPlayer mediaPlayer = application().mediaPlayerComponent().getMediaPlayer();
-        List<ChapterDescription> chapters = mediaPlayer.chapters().getChapterDescriptions();
+        MediaPlayer mediaPlayer = application().mediaPlayerComponent().mediaPlayer();
+        List<ChapterDescription> chapters = mediaPlayer.chapters().descriptions();
         if (chapters != null && !chapters.isEmpty()) {
             int i = 0;
             for (ChapterDescription chapter : chapters) {
-                String name = chapter.getName();
+                String name = chapter.name();
                 if (name == null) {
                     name = String.format("Chapter %02d", i+1);
                 }
-                long offset = chapter.getOffset() / 1000 / 60;
-                long duration = chapter.getDuration() / 1000 / 60;
+                long offset = chapter.offset() / 1000 / 60;
+                long duration = chapter.duration() / 1000 / 60;
                 String s = String.format("%s %dm (%dm)", name, offset, duration);
                 JMenuItem menuItem = new JMenuItem(new ChapterAction(s, mediaPlayer, i++));
                 menu.add(menuItem);

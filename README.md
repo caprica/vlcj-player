@@ -38,6 +38,7 @@ Features
  - subtitle track selection
  - load external subtitle file
  - change audio device
+ - change audio stereo mode
  - change playback speed
  - capture and display native logs
  - capture and display video surface debug messages (e.g. to test mouse and keyboard events still work)
@@ -46,8 +47,11 @@ Features
  - zoom/scale
  - aspect ratio
  - crop
+ - logo/marquee
  - always on top
  - video snapshots
+ - drag and drop local files to the main window
+ - drag and drop URLs from web browsers to the main window (e.g. to play a YouTube video)
  - redirect native output streams (on Linux)
 
 ...and a whole bunch of other nifty stuff.

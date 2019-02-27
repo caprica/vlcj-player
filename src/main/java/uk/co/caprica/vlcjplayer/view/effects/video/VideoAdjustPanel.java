@@ -101,7 +101,7 @@ public class VideoAdjustPanel extends BasePanel {
         gammaSlider.setMinimum(Math.round(LibVlcConst.MIN_GAMMA * 100.0f));
         gammaSlider.setMaximum(Math.round(LibVlcConst.MAX_GAMMA * 100.0f));
 
-        MediaPlayer mediaPlayer = mediaPlayerComponent.getMediaPlayer();
+        MediaPlayer mediaPlayer = mediaPlayerComponent.mediaPlayer();
 
         enableCheckBox.addActionListener(new ActionListener() {
             @Override
@@ -152,11 +152,11 @@ public class VideoAdjustPanel extends BasePanel {
             }
         });
 
-        contrastSlider.setValue(Math.round(mediaPlayer.video().getBrightness() * 100.0f));
-        brightnessSlider.setValue(Math.round(mediaPlayer.video().getContrast() * 100.0f));
-        hueSlider.setValue(Math.round(mediaPlayer.video().getHue() * 100.0f));
-        saturationSlider.setValue(Math.round(mediaPlayer.video().getSaturation() * 100.0f));
-        gammaSlider.setValue(Math.round(mediaPlayer.video().getGamma() * 100.0f));
+        contrastSlider.setValue(Math.round(mediaPlayer.video().brightness() * 100.0f));
+        brightnessSlider.setValue(Math.round(mediaPlayer.video().contrast() * 100.0f));
+        hueSlider.setValue(Math.round(mediaPlayer.video().hue() * 100.0f));
+        saturationSlider.setValue(Math.round(mediaPlayer.video().saturation() * 100.0f));
+        gammaSlider.setValue(Math.round(mediaPlayer.video().gamma() * 100.0f));
 
         setLayout(new MigLayout("fill", "[shrink]rel[grow]", ""));
         add(enableCheckBox, "span 2, wrap");
