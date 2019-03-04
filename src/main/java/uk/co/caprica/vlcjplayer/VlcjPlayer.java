@@ -173,13 +173,6 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         messagesFrame = new NativeLogFrame(nativeLog);
         effectsFrame = new EffectsFrame();
         debugFrame = new DebugFrame();
-
-        mediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-            @Override
-            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-                System.out.println("TEST LISTENER READY!");
-            }
-        });
     }
 
     private void start() {
@@ -196,7 +189,6 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
             discoverer.events().addRendererDiscovererEventListener(this);
             rendererDiscoverers.add(discoverer);
         }
-
     }
 
     @Override
