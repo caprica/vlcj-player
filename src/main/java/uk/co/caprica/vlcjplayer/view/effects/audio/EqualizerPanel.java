@@ -66,10 +66,10 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
     public EqualizerPanel() {
         this.mediaPlayerComponent = application().mediaPlayerComponent();
 
-        this.equalizer = mediaPlayerComponent.mediaPlayerFactory().equalizers().newEqualizer();
+        this.equalizer = mediaPlayerComponent.mediaPlayerFactory().equalizer().newEqualizer();
 
-        List<Float> list = mediaPlayerComponent.mediaPlayerFactory().equalizers().bands();
-        List<String> presets = mediaPlayerComponent.mediaPlayerFactory().equalizers().presets();
+        List<Float> list = mediaPlayerComponent.mediaPlayerFactory().equalizer().bands();
+        List<String> presets = mediaPlayerComponent.mediaPlayerFactory().equalizer().presets();
 
         JPanel bandsPane = new JPanel();
         bandsPane.setLayout(new GridLayout(1, 1 + list.size(), 2, 0));
@@ -169,7 +169,7 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
         String presetName = (String) presetComboBox.getSelectedItem();
         if (e.getStateChange() == ItemEvent.SELECTED) {
             if (presetName != null) {
-                Equalizer presetEqualizer = mediaPlayerComponent.mediaPlayerFactory().equalizers().newEqualizer(presetName);
+                Equalizer presetEqualizer = mediaPlayerComponent.mediaPlayerFactory().equalizer().newEqualizer(presetName);
                 if (presetEqualizer != null) {
                     applyingPreset = true;
                     preampControl.getSlider().setValue((int) (presetEqualizer.preamp() * 100f));
