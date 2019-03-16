@@ -19,21 +19,17 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 
 abstract class MediaPlayerAction extends StandardAction {
 
-    protected final MediaPlayer mediaPlayer;
-
-    MediaPlayerAction(Resource resource, MediaPlayer mediaPlayer) {
+    MediaPlayerAction(Resource resource) {
         super(resource);
-        this.mediaPlayer = mediaPlayer;
     }
 
-    MediaPlayerAction(String name, MediaPlayer mediaPlayer) {
+    MediaPlayerAction(String name) {
         super(name);
-        this.mediaPlayer = mediaPlayer;
     }
+
 }

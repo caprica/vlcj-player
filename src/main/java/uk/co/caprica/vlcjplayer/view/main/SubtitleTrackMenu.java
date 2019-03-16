@@ -37,16 +37,16 @@ final class SubtitleTrackMenu extends TrackMenu {
 
     @Override
     protected Action createAction(TrackDescription trackDescription) {
-        return new SubtitleTrackAction(trackDescription.description(), application().mediaPlayerComponent().mediaPlayer(), trackDescription.id());
+        return new SubtitleTrackAction(trackDescription.description(), trackDescription.id());
     }
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayerComponent().mediaPlayer().subpictures().trackDescriptions();
+        return application().mediaPlayer().subpictures().trackDescriptions();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().mediaPlayer().subpictures().track();
+        return application().mediaPlayer().subpictures().track();
     }
 }

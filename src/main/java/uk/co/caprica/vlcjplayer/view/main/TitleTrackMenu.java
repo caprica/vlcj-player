@@ -39,13 +39,13 @@ final class TitleTrackMenu extends TrackMenu {
 
     @Override
     protected Action createAction(TrackDescription trackDescription) {
-        return new TitleAction(trackDescription.description(), application().mediaPlayerComponent().mediaPlayer(), trackDescription.id());
+        return new TitleAction(trackDescription.description(), trackDescription.id());
     }
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
         // FIXME for now I'll just convert the list... but it should be List<TitleDescription>
-        List<TitleDescription> titles = application().mediaPlayerComponent().mediaPlayer().titles().titleDescriptions();
+        List<TitleDescription> titles = application().mediaPlayer().titles().titleDescriptions();
         List<TrackDescription> result = new ArrayList<TrackDescription>(titles.size());
         int id = 0;
         for (TitleDescription title : titles) {
@@ -63,6 +63,6 @@ final class TitleTrackMenu extends TrackMenu {
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().mediaPlayer().titles().title();
+        return application().mediaPlayer().titles().title();
     }
 }

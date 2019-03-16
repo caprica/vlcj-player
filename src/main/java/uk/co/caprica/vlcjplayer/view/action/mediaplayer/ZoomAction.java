@@ -19,22 +19,24 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class ZoomAction extends MediaPlayerAction {
 
     private final float zoom;
 
-    ZoomAction(Resource resource, MediaPlayer mediaPlayer, float zoom) {
-        super(resource, mediaPlayer);
+    ZoomAction(Resource resource, float zoom) {
+        super(resource);
         this.zoom = zoom;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.video().setScale(zoom);
+        application().mediaPlayer().video().setScale(zoom);
     }
+
 }

@@ -140,7 +140,7 @@ public class EqualizerPanel extends BasePanel implements ChangeListener, ItemLis
     @Override
     public final void actionPerformed(ActionEvent e) {
         boolean enable = enableCheckBox.isSelected();
-        mediaPlayerComponent.mediaPlayer().audio().setEqualizer(enable ? equalizer : null);
+        application().mediaPlayer().audio().setEqualizer(enable ? equalizer : null);
         enableControls(enable);
     }
 

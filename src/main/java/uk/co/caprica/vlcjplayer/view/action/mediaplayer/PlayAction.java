@@ -19,24 +19,26 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class PlayAction extends MediaPlayerAction {
 
-    PlayAction(Resource resource, MediaPlayer mediaPlayer) {
-        super(resource, mediaPlayer);
+    PlayAction(Resource resource) {
+        super(resource);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!mediaPlayer.status().isPlaying()) {
-            mediaPlayer.controls().play();
+        if (!application().mediaPlayer().status().isPlaying()) {
+            application().mediaPlayer().controls().play();
         }
         else {
-            mediaPlayer.controls().pause();
+            application().mediaPlayer().controls().pause();
         }
     }
+
 }

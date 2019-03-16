@@ -20,7 +20,13 @@
 package uk.co.caprica.vlcjplayer;
 
 import com.google.common.eventbus.EventBus;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.callback.FilledCallbackImagePainter;
+import uk.co.caprica.vlcj.player.component.callback.FixedCallbackImagePainter;
+import uk.co.caprica.vlcj.player.component.callback.ScaledCallbackImagePainter;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
@@ -46,11 +52,19 @@ public final class Application {
 
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
+    private final CallbackMediaPlayerComponent callbackMediaPlayerComponent;
+
     private final MediaPlayerActions mediaPlayerActions;
 
     private final ScheduledExecutorService tickService = Executors.newSingleThreadScheduledExecutor();
 
     private final Deque<String> recentMedia = new ArrayDeque<>(MAX_RECENT_MEDIA_SIZE);
+
+    /**
+     * Video output can be "EMBEDDED" for the usual hardware-accelerated playback, or "CALLBACK" for the software or
+     * "direct-rendering" approach.
+     */
+    private VideoOutput videoOutput = VideoOutput.CALLBACK;
 
     private static final class ApplicationHolder {
         private static final Application INSTANCE = new Application();
@@ -68,6 +82,7 @@ public final class Application {
         eventBus = new EventBus();
 
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+        callbackMediaPlayerComponent = new CallbackMediaPlayerComponent(null, null, null, true, new ScaledCallbackImagePainter());
 
         mediaPlayerActions = new MediaPlayerActions(mediaPlayerComponent.mediaPlayer());
 
@@ -100,6 +115,25 @@ public final class Application {
 
     public EmbeddedMediaPlayerComponent mediaPlayerComponent() {
         return mediaPlayerComponent;
+    }
+
+    public CallbackMediaPlayerComponent callbackMediaPlayerComponent() {
+        return callbackMediaPlayerComponent;
+    }
+
+    public EmbeddedMediaPlayer mediaPlayer() {
+        switch (videoOutput) {
+            case EMBEDDED:
+                return mediaPlayerComponent.mediaPlayer();
+            case CALLBACK:
+                return callbackMediaPlayerComponent.mediaPlayer();
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    public VideoOutput videoOutput() {
+        return videoOutput;
     }
 
     public MediaPlayerActions mediaPlayerActions() {

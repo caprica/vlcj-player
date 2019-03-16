@@ -37,16 +37,16 @@ final class AudioTrackMenu extends TrackMenu {
 
     @Override
     protected Action createAction(TrackDescription trackDescription) {
-        return new AudioTrackAction(trackDescription.description(), application().mediaPlayerComponent().mediaPlayer(), trackDescription.id());
+        return new AudioTrackAction(trackDescription.description(), trackDescription.id());
     }
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayerComponent().mediaPlayer().audio().trackDescriptions();
+        return application().mediaPlayer().audio().trackDescriptions();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().mediaPlayer().audio().track();
+        return application().mediaPlayer().audio().track();
     }
 }

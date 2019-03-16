@@ -19,27 +19,29 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class AspectRatioAction extends MediaPlayerAction {
 
     private final String aspectRatio;
 
-    AspectRatioAction(Resource resource, MediaPlayer mediaPlayer, String aspectRatio) {
-        super(resource, mediaPlayer);
+    AspectRatioAction(Resource resource, String aspectRatio) {
+        super(resource);
         this.aspectRatio = aspectRatio;
     }
 
-    AspectRatioAction(String name, MediaPlayer mediaPlayer, String aspectRatio) {
-        super(name, mediaPlayer);
+    AspectRatioAction(String name, String aspectRatio) {
+        super(name);
         this.aspectRatio = aspectRatio;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.video().setAspectRatio(aspectRatio);
+        application().mediaPlayer().video().setAspectRatio(aspectRatio);
     }
+
 }

@@ -19,27 +19,29 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class CropAction extends MediaPlayerAction {
 
     private final String cropGeometry;
 
-    CropAction(Resource resource, MediaPlayer mediaPlayer, String cropGeometry) {
-        super(resource, mediaPlayer);
+    CropAction(Resource resource, String cropGeometry) {
+        super(resource);
         this.cropGeometry = cropGeometry;
     }
 
-    public CropAction(String name, MediaPlayer mediaPlayer, String cropGeometry) {
-        super(name, mediaPlayer);
+    public CropAction(String name, String cropGeometry) {
+        super(name);
         this.cropGeometry = cropGeometry;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.video().setCropGeometry(cropGeometry);
+        application().mediaPlayer().video().setCropGeometry(cropGeometry);
     }
+
 }

@@ -19,22 +19,24 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class RateAction extends MediaPlayerAction {
 
     private final float rate;
 
-    RateAction(Resource resource, MediaPlayer mediaPlayer, float rate) {
-        super(resource, mediaPlayer);
+    RateAction(Resource resource, float rate) {
+        super(resource);
         this.rate = rate;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.controls().setRate(rate);
+        application().mediaPlayer().controls().setRate(rate);
     }
+
 }

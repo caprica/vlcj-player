@@ -19,17 +19,15 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
-import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Action;
-
+import com.google.common.collect.ImmutableList;
 import uk.co.caprica.vlcj.player.base.AudioChannel;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
-import com.google.common.collect.ImmutableList;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 // FIXME i think none of these actions need be public now?
 //       the dynamic ones currently are unfortunately... for now... (e.g. videotrack)
@@ -66,100 +64,100 @@ public final class MediaPlayerActions {
         videoAspectRatioActions = newVideoAspectRatioActions(mediaPlayer);
         videoCropActions        = newVideoCropActions       (mediaPlayer);
 
-        playbackPlayAction      = new PlayAction    (resource("menu.playback.item.play" ), mediaPlayer);
-        playbackStopAction      = new StopAction    (resource("menu.playback.item.stop" ), mediaPlayer);
-        videoSnapshotAction     = new SnapshotAction(resource("menu.video.item.snapshot"), mediaPlayer);
+        playbackPlayAction      = new PlayAction    (resource("menu.playback.item.play" ));
+        playbackStopAction      = new StopAction    (resource("menu.playback.item.stop" ));
+        videoSnapshotAction     = new SnapshotAction(resource("menu.video.item.snapshot"));
     }
 
     private List<Action> newPlaybackSpeedActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new RateAction(resource("menu.playback.item.speed.item.x4"    ), mediaPlayer, 4f));
-        actions.add(new RateAction(resource("menu.playback.item.speed.item.x2"    ), mediaPlayer, 2f));
-        actions.add(new RateAction(resource("menu.playback.item.speed.item.normal"), mediaPlayer, 1f));
-        actions.add(new RateAction(resource("menu.playback.item.speed.item./2"    ), mediaPlayer, 0.5f));
-        actions.add(new RateAction(resource("menu.playback.item.speed.item./4"    ), mediaPlayer, 0.25f));
+        actions.add(new RateAction(resource("menu.playback.item.speed.item.x4"    ), 4f));
+        actions.add(new RateAction(resource("menu.playback.item.speed.item.x2"    ), 2f));
+        actions.add(new RateAction(resource("menu.playback.item.speed.item.normal"), 1f));
+        actions.add(new RateAction(resource("menu.playback.item.speed.item./2"    ), 0.5f));
+        actions.add(new RateAction(resource("menu.playback.item.speed.item./4"    ), 0.25f));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newPlaybackSkipActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new SkipAction(resource("menu.playback.item.skipForward" ), mediaPlayer,  10000));
-        actions.add(new SkipAction(resource("menu.playback.item.skipBackward"), mediaPlayer, -10000));
+        actions.add(new SkipAction(resource("menu.playback.item.skipForward" ), 10000));
+        actions.add(new SkipAction(resource("menu.playback.item.skipBackward"), -10000));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newPlaybackChapterActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new PreviousChapterAction(resource("menu.playback.item.previousChapter"), mediaPlayer));
-        actions.add(new NextChapterAction    (resource("menu.playback.item.nextChapter"    ), mediaPlayer));
+        actions.add(new PreviousChapterAction(resource("menu.playback.item.previousChapter")));
+        actions.add(new NextChapterAction    (resource("menu.playback.item.nextChapter"    )));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newPlaybackControlActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new PlayAction(resource("menu.playback.item.play"), mediaPlayer));
-        actions.add(new StopAction(resource("menu.playback.item.stop"), mediaPlayer));
+        actions.add(new PlayAction(resource("menu.playback.item.play")));
+        actions.add(new StopAction(resource("menu.playback.item.stop")));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newAudioStereoModeActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), mediaPlayer, AudioChannel.UNSET));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), mediaPlayer, AudioChannel.STEREO));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), mediaPlayer, AudioChannel.LEFT));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), mediaPlayer, AudioChannel.RIGHT));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), mediaPlayer, AudioChannel.RSTEREO));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), mediaPlayer, AudioChannel.DOLBYS));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), mediaPlayer, AudioChannel.HEADPHONES));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), mediaPlayer, AudioChannel.MONO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), AudioChannel.UNSET));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), AudioChannel.STEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), AudioChannel.LEFT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), AudioChannel.RIGHT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), AudioChannel.RSTEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioChannel.DOLBYS));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), AudioChannel.HEADPHONES));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioChannel.MONO));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newAudioControlActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new VolumeAction(resource("menu.audio.item.increaseVolume"), mediaPlayer,  10));
-        actions.add(new VolumeAction(resource("menu.audio.item.decreaseVolume"), mediaPlayer, -10));
-        actions.add(new MuteAction  (resource("menu.audio.item.mute"          ), mediaPlayer     ));
+        actions.add(new VolumeAction(resource("menu.audio.item.increaseVolume"),  10));
+        actions.add(new VolumeAction(resource("menu.audio.item.decreaseVolume"), -10));
+        actions.add(new MuteAction  (resource("menu.audio.item.mute"          )           ));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newVideoZoomActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.quarter" ), mediaPlayer, 0.25f));
-        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.half"    ), mediaPlayer, 0.50f));
-        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.original"), mediaPlayer, 1.00f));
-        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.double"  ), mediaPlayer, 2.00f));
+        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.quarter" ), 0.25f));
+        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.half"    ), 0.50f));
+        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.original"), 1.00f));
+        actions.add(new ZoomAction(resource("menu.video.item.zoom.item.double"  ), 2.00f));
         // FIXME maybe need a zoom default of 0.0 (or is this just fit window?)
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newVideoAspectRatioActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new AspectRatioAction(resource("menu.video.item.aspectRatio.item.default"), mediaPlayer, null));
-        actions.add(new AspectRatioAction("16:9"  , mediaPlayer, "16:9"   ));
-        actions.add(new AspectRatioAction("4:3"   , mediaPlayer, "4:3"    ));
-        actions.add(new AspectRatioAction("1:1"   , mediaPlayer, "1:1"    ));
-        actions.add(new AspectRatioAction("16:10" , mediaPlayer, "16:10"  ));
-        actions.add(new AspectRatioAction("2.21:1", mediaPlayer, "221:100"));
-        actions.add(new AspectRatioAction("2.35:1", mediaPlayer, "235:100"));
-        actions.add(new AspectRatioAction("2.39:1", mediaPlayer, "239:100"));
-        actions.add(new AspectRatioAction("5:4"   , mediaPlayer, "5:4"    ));
+        actions.add(new AspectRatioAction(resource("menu.video.item.aspectRatio.item.default"), null));
+        actions.add(new AspectRatioAction("16:9"  , "16:9"   ));
+        actions.add(new AspectRatioAction("4:3"   , "4:3"    ));
+        actions.add(new AspectRatioAction("1:1"   , "1:1"    ));
+        actions.add(new AspectRatioAction("16:10" , "16:10"  ));
+        actions.add(new AspectRatioAction("2.21:1", "221:100"));
+        actions.add(new AspectRatioAction("2.35:1", "235:100"));
+        actions.add(new AspectRatioAction("2.39:1", "239:100"));
+        actions.add(new AspectRatioAction("5:4"   , "5:4"    ));
         return ImmutableList.copyOf(actions);
     }
 
     private List<Action> newVideoCropActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new CropAction(resource("menu.video.item.crop.item.default"), mediaPlayer, null));
-        actions.add(new CropAction("16:10" , mediaPlayer, "16:10"  ));
-        actions.add(new CropAction("16:9"  , mediaPlayer, "16:9"   ));
-        actions.add(new CropAction("4:3"   , mediaPlayer, "4:3"    ));
-        actions.add(new CropAction("1.85:1", mediaPlayer, "185:100"));
-        actions.add(new CropAction("2.21:1", mediaPlayer, "221:100"));
-        actions.add(new CropAction("2.35:1", mediaPlayer, "235:100"));
-        actions.add(new CropAction("2.39:1", mediaPlayer, "239:100"));
-        actions.add(new CropAction("5:3"   , mediaPlayer, "5:3"    ));
-        actions.add(new CropAction("5:4"   , mediaPlayer, "5:4"    ));
-        actions.add(new CropAction("1:1"   , mediaPlayer, "1:1"    ));
+        actions.add(new CropAction(resource("menu.video.item.crop.item.default"), null));
+        actions.add(new CropAction("16:10" , "16:10"  ));
+        actions.add(new CropAction("16:9"  , "16:9"   ));
+        actions.add(new CropAction("4:3"   , "4:3"    ));
+        actions.add(new CropAction("1.85:1", "185:100"));
+        actions.add(new CropAction("2.21:1", "221:100"));
+        actions.add(new CropAction("2.35:1", "235:100"));
+        actions.add(new CropAction("2.39:1", "239:100"));
+        actions.add(new CropAction("5:3"   , "5:3"    ));
+        actions.add(new CropAction("5:4"   , "5:4"    ));
+        actions.add(new CropAction("1:1"   , "1:1"    ));
         return ImmutableList.copyOf(actions);
     }
 
@@ -210,4 +208,5 @@ public final class MediaPlayerActions {
     public Action videoSnapshotAction() {
         return videoSnapshotAction;
     }
+
 }

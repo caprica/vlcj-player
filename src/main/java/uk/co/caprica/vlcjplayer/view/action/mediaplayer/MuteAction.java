@@ -19,19 +19,21 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class MuteAction extends MediaPlayerAction {
 
-    MuteAction(Resource resource, MediaPlayer mediaPlayer) {
-        super(resource, mediaPlayer);
+    MuteAction(Resource resource) {
+        super(resource);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.audio().mute();
+        application().mediaPlayer().audio().mute();
     }
+
 }

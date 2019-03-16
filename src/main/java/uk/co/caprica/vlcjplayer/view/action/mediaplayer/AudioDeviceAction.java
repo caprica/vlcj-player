@@ -19,22 +19,24 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcj.player.base.AudioDevice;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.AudioDevice;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 public final class AudioDeviceAction extends MediaPlayerAction {
 
     private final AudioDevice audioDevice;
 
-    public AudioDeviceAction(AudioDevice audioDevice, MediaPlayer mediaPlayer) {
-        super(audioDevice.getLongName(), mediaPlayer);
+    public AudioDeviceAction(AudioDevice audioDevice) {
+        super(audioDevice.getLongName());
         this.audioDevice = audioDevice;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.audio().setOutputDevice(null, audioDevice.getDeviceId());
+        application().mediaPlayer().audio().setOutputDevice(null, audioDevice.getDeviceId());
     }
+
 }

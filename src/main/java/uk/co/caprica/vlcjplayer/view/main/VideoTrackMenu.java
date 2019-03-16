@@ -37,16 +37,16 @@ final class VideoTrackMenu extends TrackMenu {
 
     @Override
     protected Action createAction(TrackDescription trackDescription) {
-        return new VideoTrackAction(trackDescription.description(), application().mediaPlayerComponent().mediaPlayer(), trackDescription.id());
+        return new VideoTrackAction(trackDescription.description(), trackDescription.id());
     }
 
     @Override
     protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayerComponent().mediaPlayer().video().trackDescriptions();
+        return application().mediaPlayer().video().trackDescriptions();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayerComponent().mediaPlayer().video().track();
+        return application().mediaPlayer().video().track();
     }
 }

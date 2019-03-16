@@ -19,19 +19,21 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class PreviousChapterAction extends MediaPlayerAction {
 
-    PreviousChapterAction(Resource resource, MediaPlayer mediaPlayer) {
-        super(resource, mediaPlayer);
+    PreviousChapterAction(Resource resource) {
+        super(resource);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.chapters().previous();
+        application().mediaPlayer().chapters().previous();
     }
+
 }

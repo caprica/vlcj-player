@@ -19,26 +19,26 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
+import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
+import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class SnapshotAction extends MediaPlayerAction {
 
-    SnapshotAction(Resource resource, MediaPlayer mediaPlayer) {
-        super(resource, mediaPlayer);
+    SnapshotAction(Resource resource) {
+        super(resource);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BufferedImage image = mediaPlayer.snapshots().get();
+        BufferedImage image = application().mediaPlayer().snapshots().get();
         if (image != null) {
             application().post(new SnapshotImageEvent(image));
         }
     }
+
 }

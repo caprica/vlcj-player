@@ -43,10 +43,10 @@ public final class AudioDeviceMenu extends OnDemandMenu {
 
     @Override
     protected void onCreateMenu(JMenu menu) {
-        MediaPlayer mediaPlayer = application().mediaPlayerComponent().mediaPlayer();
+        MediaPlayer mediaPlayer = application().mediaPlayer();
         ButtonGroup buttonGroup = new ButtonGroup();
         for (AudioDevice audioDevice : mediaPlayer.audio().outputDevices()) {
-            JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(new AudioDeviceAction(audioDevice, mediaPlayer));
+            JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(new AudioDeviceAction(audioDevice));
             menuItem.putClientProperty(KEY_AUDIO_DEVICE, audioDevice);
             buttonGroup.add(menuItem);
             menu.add(menuItem);
@@ -55,7 +55,7 @@ public final class AudioDeviceMenu extends OnDemandMenu {
 
     @Override
     protected void onPrepareMenu(JMenu menu) {
-        String audioDeviceId = application().mediaPlayerComponent().mediaPlayer().audio().outputDevice();
+        String audioDeviceId = application().mediaPlayer().audio().outputDevice();
         for (Component c : menu.getMenuComponents()) {
             JRadioButtonMenuItem menuItem = (JRadioButtonMenuItem) c;
             AudioDevice audioDevice = (AudioDevice) menuItem.getClientProperty(KEY_AUDIO_DEVICE);

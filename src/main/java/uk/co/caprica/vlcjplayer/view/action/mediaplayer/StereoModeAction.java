@@ -19,23 +19,25 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcj.player.base.AudioChannel;
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.AudioChannel;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class StereoModeAction extends MediaPlayerAction {
 
     private final AudioChannel mode;
 
-    StereoModeAction(Resource resource, MediaPlayer mediaPlayer, AudioChannel mode) {
-        super(resource, mediaPlayer);
+    StereoModeAction(Resource resource, AudioChannel mode) {
+        super(resource);
         this.mode = mode;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("SET CHANNEL: " + mediaPlayer.audio().setChannel(mode));
+        application().mediaPlayer().audio().setChannel(mode);
     }
+
 }

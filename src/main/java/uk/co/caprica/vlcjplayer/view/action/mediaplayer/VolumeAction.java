@@ -19,22 +19,24 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class VolumeAction extends MediaPlayerAction {
 
     private final int delta;
 
-    VolumeAction(Resource resource, MediaPlayer mediaPlayer, int delta) {
-        super(resource, mediaPlayer);
+    VolumeAction(Resource resource, int delta) {
+        super(resource);
         this.delta = delta;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.audio().setVolume(mediaPlayer.audio().volume() + delta);
+        application().mediaPlayer().audio().setVolume(application().mediaPlayer().audio().volume() + delta);
     }
+
 }

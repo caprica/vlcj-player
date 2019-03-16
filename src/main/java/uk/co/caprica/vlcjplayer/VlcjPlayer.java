@@ -19,9 +19,12 @@
 
 package uk.co.caprica.vlcjplayer;
 
+import com.sun.jna.NativeLibrary;
 import uk.co.caprica.nativestreams.NativeStreams;
+import uk.co.caprica.vlcj.binding.LibC;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
@@ -56,6 +59,11 @@ import static uk.co.caprica.vlcjplayer.Application.application;
  */
 public class VlcjPlayer implements RendererDiscovererEventListener {
 
+    static {
+        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "/disks/data/build/install/libs-3");
+        LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", "/disks/data/build/install/libs-3/plugins", 1);
+    }
+
     private static VlcjPlayer app;
 
     private static final NativeStreams nativeStreams;
@@ -70,8 +78,6 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
             nativeStreams = null;
 //        }
     }
-
-    private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
     private final List<RendererDiscoverer> rendererDiscoverers = new ArrayList<>();
 
@@ -139,7 +145,8 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     }
 
     public VlcjPlayer() {
-        mediaPlayerComponent = application().mediaPlayerComponent();
+        EmbeddedMediaPlayerComponent mediaPlayerComponent = application().mediaPlayerComponent();
+        CallbackMediaPlayerComponent callbackMediaPlayerComponent = application().callbackMediaPlayerComponent();
 
         prepareDiscoverers();
 
@@ -147,15 +154,23 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                // Stop audio as soon as possible
+                application().mediaPlayer().controls().stop();
+
+                // Avoid the visible delay disposing everything
+                mainFrame.setVisible(false);
+
                 for (RendererDiscoverer discoverer : rendererDiscoverers) {
                     discoverer.stop();
                 }
 
-                mediaPlayerComponent.mediaPlayer().controls().stop();
                 mediaPlayerComponent.release();
+                callbackMediaPlayerComponent.release();
+
                 if (nativeStreams != null) {
                     nativeStreams.release();
                 }
+
                 application().post(ShutdownEvent.INSTANCE);
             }
 
@@ -165,8 +180,8 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         });
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        final EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.mediaPlayer();
-        embeddedMediaPlayer.fullScreen().strategy(new VlcjPlayerFullScreenStrategy(mainFrame));
+        application().mediaPlayerComponent().mediaPlayer().fullScreen().strategy(new VlcjPlayerFullScreenStrategy(mainFrame));
+        application().callbackMediaPlayerComponent().mediaPlayer().fullScreen().strategy(new VlcjPlayerFullScreenStrategy(mainFrame));
 
         nativeLog = mediaPlayerComponent.mediaPlayerFactory().application().newLog();
 
@@ -184,6 +199,7 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     }
 
     private void prepareDiscoverers() {
+        EmbeddedMediaPlayerComponent mediaPlayerComponent = application().mediaPlayerComponent();
         for (RendererDiscovererDescription descriptions : mediaPlayerComponent.mediaPlayerFactory().renderers().discoverers()) {
             RendererDiscoverer discoverer = mediaPlayerComponent.mediaPlayerFactory().renderers().discoverer(descriptions.name());
             discoverer.events().addRendererDiscovererEventListener(this);

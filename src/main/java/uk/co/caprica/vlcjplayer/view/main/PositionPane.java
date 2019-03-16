@@ -48,15 +48,11 @@ final class PositionPane extends JPanel {
 
     private long time;
 
-    private final MediaPlayer mediaPlayer;
-
     private final AtomicBoolean sliderChanging = new AtomicBoolean();
 
     private final AtomicBoolean positionChanging = new AtomicBoolean();
 
-    PositionPane(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
-
+    PositionPane() {
         timeLabel = new StandardLabel("9:99:99");
 
         UIManager.put("Slider.paintValue", false); // FIXME how to do this for a single component?
@@ -76,7 +72,7 @@ final class PositionPane extends JPanel {
                     else {
                         sliderChanging.set(false);
                     }
-                    mediaPlayer.controls().setPosition(source.getValue() / 1000.0f);
+                    application().mediaPlayer().controls().setPosition(source.getValue() / 1000.0f);
                 }
             }
         });
@@ -99,7 +95,7 @@ final class PositionPane extends JPanel {
         timeLabel.setText(formatTime(time));
 
         if (!sliderChanging.get()) {
-            int value = (int) (mediaPlayer.status().position() * 1000.0f);
+            int value = (int) (application().mediaPlayer().status().position() * 1000.0f);
             positionChanging.set(true);
             positionSlider.setValue(value);
             positionChanging.set(false);

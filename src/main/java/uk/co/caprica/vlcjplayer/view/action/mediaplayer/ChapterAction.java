@@ -21,19 +21,20 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 public final class ChapterAction extends MediaPlayerAction {
 
     private final int chapter;
 
-    public ChapterAction(String name, MediaPlayer mediaPlayer, int chapter) {
-        super(name, mediaPlayer);
+    public ChapterAction(String name, int chapter) {
+        super(name);
         this.chapter = chapter;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.chapters().setChapter(chapter);
+        application().mediaPlayer().chapters().setChapter(chapter);
     }
+
 }

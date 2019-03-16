@@ -21,19 +21,20 @@ package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import java.awt.event.ActionEvent;
 
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 public final class TitleAction extends MediaPlayerAction {
 
     private final int titleId;
 
-    public TitleAction(String name, MediaPlayer mediaPlayer, int titleId) {
-        super(name, mediaPlayer);
+    public TitleAction(String name, int titleId) {
+        super(name);
         this.titleId = titleId;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mediaPlayer.titles().setTitle(titleId);
+        application().mediaPlayer().titles().setTitle(titleId);
     }
+
 }

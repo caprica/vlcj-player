@@ -48,4 +48,5 @@ public final class RendererAction extends StandardAction {
     public void actionPerformed(ActionEvent e) {
         application().setRenderer(renderer);
     }
+
 }
