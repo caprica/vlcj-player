@@ -60,8 +60,8 @@ import static uk.co.caprica.vlcjplayer.Application.application;
 public class VlcjPlayer implements RendererDiscovererEventListener {
 
     static {
-        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "/disks/data/build/install/libs-3");
-        LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", "/disks/data/build/install/libs-3/plugins", 1);
+//        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "/disks/data/build/install/libs-3");
+//        LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", "/disks/data/build/install/libs-3/plugins", 1);
     }
 
     private static VlcjPlayer app;
