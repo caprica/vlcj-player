@@ -19,34 +19,33 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import uk.co.caprica.vlcj.player.base.TextTrack;
+import uk.co.caprica.vlcj.player.base.TrackList;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.SubtitleTrackAction;
+
+import javax.swing.*;
+
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
-import java.util.List;
-
-import javax.swing.Action;
-
-import uk.co.caprica.vlcj.player.base.TrackDescription;
-import uk.co.caprica.vlcjplayer.view.action.mediaplayer.SubtitleTrackAction;
-
-final class SubtitleTrackMenu extends TrackMenu {
+final class SubtitleTrackMenu extends TrackMenu<TextTrack> {
 
     SubtitleTrackMenu() {
         super(resource("menu.subtitle.item.track"));
     }
 
     @Override
-    protected Action createAction(TrackDescription trackDescription) {
-        return new SubtitleTrackAction(trackDescription.description(), trackDescription.id());
+    protected Action createAction(TextTrack trackDescription) {
+        return new SubtitleTrackAction(trackDescription.description(), trackDescription);
     }
 
     @Override
-    protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayer().subpictures().trackDescriptions();
+    protected TrackList<TextTrack> onGetTrackDescriptions() {
+        return application().mediaPlayer().tracks().textTracks();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayer().subpictures().track();
+        return application().mediaPlayer().tracks().selectedTextTrack().id();
     }
 }

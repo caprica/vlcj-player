@@ -19,12 +19,12 @@
 
 package uk.co.caprica.vlcjplayer.view.effects.video;
 
-import static uk.co.caprica.vlcjplayer.Application.resources;
-
-import javax.swing.JTabbedPane;
-
 import net.miginfocom.swing.MigLayout;
 import uk.co.caprica.vlcjplayer.view.BasePanel;
+
+import javax.swing.*;
+
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 public class VideoEffectsPanel extends BasePanel {
 

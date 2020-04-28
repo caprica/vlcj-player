@@ -19,34 +19,33 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import uk.co.caprica.vlcj.player.base.TrackList;
+import uk.co.caprica.vlcj.player.base.VideoTrack;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.VideoTrackAction;
+
+import javax.swing.*;
+
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
-import java.util.List;
-
-import javax.swing.Action;
-
-import uk.co.caprica.vlcj.player.base.TrackDescription;
-import uk.co.caprica.vlcjplayer.view.action.mediaplayer.VideoTrackAction;
-
-final class VideoTrackMenu extends TrackMenu {
+final class VideoTrackMenu extends TrackMenu<VideoTrack> {
 
     VideoTrackMenu() {
         super(resource("menu.video.item.track"));
     }
 
     @Override
-    protected Action createAction(TrackDescription trackDescription) {
-        return new VideoTrackAction(trackDescription.description(), trackDescription.id());
+    protected Action createAction(VideoTrack trackDescription) {
+        return new VideoTrackAction(trackDescription.description(), trackDescription);
     }
 
     @Override
-    protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayer().video().trackDescriptions();
+    protected TrackList<VideoTrack> onGetTrackDescriptions() {
+        return application().mediaPlayer().tracks().videoTracks();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayer().video().track();
+        return application().mediaPlayer().tracks().selectedVideoTrack().id();
     }
 }

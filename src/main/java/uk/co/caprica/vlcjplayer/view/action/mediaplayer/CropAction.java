@@ -41,7 +41,8 @@ final class CropAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        application().mediaPlayer().video().setCropGeometry(cropGeometry);
+        // FIXME
+//        application().mediaPlayer().video().setCropGeometry(cropGeometry);
     }
 
 }

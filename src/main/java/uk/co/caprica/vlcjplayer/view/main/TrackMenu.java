@@ -19,18 +19,14 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import java.util.List;
-
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenu;
-import javax.swing.JRadioButtonMenuItem;
-
-import uk.co.caprica.vlcj.player.base.TrackDescription;
+import uk.co.caprica.vlcj.player.base.Track;
+import uk.co.caprica.vlcj.player.base.TrackList;
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
-abstract class TrackMenu extends OnDemandMenu {
+import javax.swing.*;
+
+abstract class TrackMenu<T extends Track> extends OnDemandMenu {
 
     private static final String KEY_TRACK_DESCRIPTION = "track-description";
 
@@ -42,7 +38,7 @@ abstract class TrackMenu extends OnDemandMenu {
     protected final void onPrepareMenu(JMenu menu) {
         ButtonGroup buttonGroup = new ButtonGroup();
         int selectedTrack = onGetSelectedTrack();
-        for (TrackDescription trackDescription : onGetTrackDescriptions()) {
+        for (T trackDescription : onGetTrackDescriptions().tracks()) {
             JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(createAction(trackDescription));
             menuItem.putClientProperty(KEY_TRACK_DESCRIPTION, trackDescription);
             buttonGroup.add(menuItem);
@@ -53,9 +49,9 @@ abstract class TrackMenu extends OnDemandMenu {
         }
     }
 
-    protected abstract Action createAction(TrackDescription trackDescription);
+    protected abstract Action createAction(T trackDescription);
 
-    protected abstract List<TrackDescription> onGetTrackDescriptions();
+    protected abstract TrackList<T> onGetTrackDescriptions();
 
     protected abstract int onGetSelectedTrack();
 }

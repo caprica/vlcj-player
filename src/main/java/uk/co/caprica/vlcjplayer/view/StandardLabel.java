@@ -19,11 +19,8 @@
 
 package uk.co.caprica.vlcjplayer.view;
 
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Insets;
-
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
 
 public class StandardLabel extends JLabel {
 

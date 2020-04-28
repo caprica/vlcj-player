@@ -19,41 +19,26 @@
 
 package uk.co.caprica.vlcjplayer.view.messages;
 
-import static uk.co.caprica.vlcjplayer.Application.resources;
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.swing.AdvancedTableModel;
+import ca.odell.glazedlists.swing.GlazedListsSwing;
+import com.google.common.eventbus.Subscribe;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.log.LogEventListener;
+import uk.co.caprica.vlcj.log.LogLevel;
+import uk.co.caprica.vlcj.log.NativeLog;
+import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
+import uk.co.caprica.vlcjplayer.view.BaseFrame;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.prefs.Preferences;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.log.LogEventListener;
-import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
-import uk.co.caprica.vlcjplayer.view.BaseFrame;
-import ca.odell.glazedlists.BasicEventList;
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.swing.AdvancedTableModel;
-import ca.odell.glazedlists.swing.GlazedListsSwing;
-
-import com.google.common.eventbus.Subscribe;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 @SuppressWarnings("serial")
 public final class NativeLogFrame extends BaseFrame implements LogEventListener {
@@ -173,7 +158,7 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
     }
 
     @Override
-    public void log(final LogLevel level, final String module, final String file, final Integer line, final String name, final String header, final Integer id, final String message) {
+    public void log(final LogLevel level, final String module, final String file, final Integer line, final String name, final String header, final Long id, final String message) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

@@ -19,7 +19,7 @@
 
 package uk.co.caprica.vlcjplayer.view;
 
-import javax.swing.BorderFactory;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 

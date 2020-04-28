@@ -19,34 +19,34 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import uk.co.caprica.vlcj.player.base.AudioTrack;
+import uk.co.caprica.vlcj.player.base.TrackList;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.AudioTrackAction;
+
+import javax.swing.*;
+
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
-import java.util.List;
-
-import javax.swing.Action;
-
-import uk.co.caprica.vlcj.player.base.TrackDescription;
-import uk.co.caprica.vlcjplayer.view.action.mediaplayer.AudioTrackAction;
-
-final class AudioTrackMenu extends TrackMenu {
+final class AudioTrackMenu extends TrackMenu<AudioTrack> {
 
     AudioTrackMenu() {
         super(resource("menu.audio.item.track"));
     }
 
     @Override
-    protected Action createAction(TrackDescription trackDescription) {
-        return new AudioTrackAction(trackDescription.description(), trackDescription.id());
+    protected Action createAction(AudioTrack trackDescription) {
+        return new AudioTrackAction(trackDescription.description(), trackDescription);
     }
 
     @Override
-    protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayer().audio().trackDescriptions();
+    protected TrackList<AudioTrack> onGetTrackDescriptions() {
+        return application().mediaPlayer().tracks().audioTracks();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayer().audio().track();
+        // FIXME probably not right anymore with id?
+        return application().mediaPlayer().tracks().selectedAudioTrack().id();
     }
 }

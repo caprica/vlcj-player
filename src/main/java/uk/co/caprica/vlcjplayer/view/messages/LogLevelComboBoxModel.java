@@ -19,9 +19,9 @@
 
 package uk.co.caprica.vlcjplayer.view.messages;
 
-import javax.swing.DefaultComboBoxModel;
-
 import uk.co.caprica.vlcj.log.LogLevel;
+
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 final class LogLevelComboBoxModel extends DefaultComboBoxModel<LogLevel> {

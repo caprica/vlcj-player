@@ -1,12 +1,11 @@
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-
-import java.awt.CardLayout;
+import uk.co.caprica.vlcjplayer.view.image.ImagePane;
 
 import javax.swing.*;
+import java.awt.*;
 
-import uk.co.caprica.vlcjplayer.view.image.ImagePane;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class VideoContentPane extends JPanel {
 

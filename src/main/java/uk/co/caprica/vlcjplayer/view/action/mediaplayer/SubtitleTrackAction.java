@@ -19,22 +19,24 @@
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
+import uk.co.caprica.vlcj.player.base.Track;
+
 import java.awt.event.ActionEvent;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
 
 public final class SubtitleTrackAction extends MediaPlayerAction {
 
-    private final int trackId;
+    private final Track trackId;
 
-    public SubtitleTrackAction(String name, int trackId) {
+    public SubtitleTrackAction(String name, Track trackId) {
         super(name);
         this.trackId = trackId;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        application().mediaPlayer().subpictures().setTrack(trackId);
+        application().mediaPlayer().tracks().selectTrack(trackId);
     }
 
 }

@@ -19,17 +19,14 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import uk.co.caprica.vlcj.player.base.Track;
+import uk.co.caprica.vlcj.player.base.VideoTrackList;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.TitleAction;
+
+import javax.swing.*;
+
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Action;
-
-import uk.co.caprica.vlcj.player.base.TitleDescription;
-import uk.co.caprica.vlcj.player.base.TrackDescription;
-import uk.co.caprica.vlcjplayer.view.action.mediaplayer.TitleAction;
 
 final class TitleTrackMenu extends TrackMenu {
 
@@ -38,27 +35,29 @@ final class TitleTrackMenu extends TrackMenu {
     }
 
     @Override
-    protected Action createAction(TrackDescription trackDescription) {
+    protected Action createAction(Track trackDescription) {
         return new TitleAction(trackDescription.description(), trackDescription.id());
     }
 
     @Override
-    protected List<TrackDescription> onGetTrackDescriptions() {
+    protected VideoTrackList onGetTrackDescriptions() {
         // FIXME for now I'll just convert the list... but it should be List<TitleDescription>
-        List<TitleDescription> titles = application().mediaPlayer().titles().titleDescriptions();
-        List<TrackDescription> result = new ArrayList<TrackDescription>(titles.size());
-        int id = 0;
-        for (TitleDescription title : titles) {
-            if (!title.isMenu()) {
-                String name = title.name();
-                if (name == null) {
-                    name = String.format("Feature %d", id+1);
-                }
-                // FIXME use Duration from TitleDescription
-                result.add(new TrackDescription(id++, name));
-            }
-        }
-        return result;
+//        List<TitleDescription> titles = application().mediaPlayer().titles().titleDescriptions();
+//        List<TrackDescription> result = new ArrayList<TrackDescription>(titles.size());
+//        int id = 0;
+//        for (TitleDescription title : titles) {
+//            if (!title.isMenu()) {
+//                String name = title.name();
+//                if (name == null) {
+//                    name = String.format("Feature %d", id+1);
+//                }
+//                // FIXME use Duration from TitleDescription
+//                result.add(new TrackDescription(id++, name));
+//            }
+//        }
+//        return result;
+//        return new VideoTrackList(null);
+        return null;
     }
 
     @Override

@@ -19,8 +19,7 @@
 
 package uk.co.caprica.vlcjplayer.view.action;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+import javax.swing.*;
 
 public abstract class StandardAction extends AbstractAction {
 

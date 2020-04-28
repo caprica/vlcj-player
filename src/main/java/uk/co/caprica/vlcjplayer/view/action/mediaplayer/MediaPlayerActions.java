@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import com.google.common.collect.ImmutableList;
-import uk.co.caprica.vlcj.player.base.AudioChannel;
+import uk.co.caprica.vlcj.player.base.AudioStereoMode;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import javax.swing.*;
@@ -102,14 +102,14 @@ public final class MediaPlayerActions {
 
     private List<Action> newAudioStereoModeActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), AudioChannel.UNSET));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), AudioChannel.STEREO));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), AudioChannel.LEFT));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), AudioChannel.RIGHT));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), AudioChannel.RSTEREO));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioChannel.DOLBYS));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), AudioChannel.HEADPHONES));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioChannel.MONO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), AudioStereoMode.UNSET));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), AudioStereoMode.STEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), AudioStereoMode.LEFT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), AudioStereoMode.RIGHT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), AudioStereoMode.RSTEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioStereoMode.DOLBYS));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), AudioStereoMode.HEADPHONES));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioStereoMode.MONO));
         return ImmutableList.copyOf(actions);
     }
 

@@ -19,9 +19,14 @@
 
 package uk.co.caprica.vlcjplayer.view.snapshot;
 
-import static uk.co.caprica.vlcjplayer.Application.resources;
+import com.google.common.io.Files;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcjplayer.view.image.ImagePane;
+import uk.co.caprica.vlcjplayer.view.image.ImagePane.Mode;
 
-import java.awt.BorderLayout;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -29,18 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcjplayer.view.image.ImagePane;
-import uk.co.caprica.vlcjplayer.view.image.ImagePane.Mode;
-
-import com.google.common.io.Files;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 /**
  * Simple frame implementation that shows a buffered image.
