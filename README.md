@@ -55,7 +55,14 @@ Features
  - redirect native output streams (on Linux)
 
 ...and a whole bunch of other nifty stuff.
- 
+
+Usage
+-----
+
+```shell
+## Compile and run it locally
+mvn clean compile exec:java
+```
 
 Status
 ------
