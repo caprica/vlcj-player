@@ -19,13 +19,12 @@
 
 package uk.co.caprica.vlcjplayer.view;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
+import com.google.common.eventbus.Subscribe;
+import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
 
 import javax.swing.JPanel;
 
-import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
-
-import com.google.common.eventbus.Subscribe;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 public abstract class BasePanel extends JPanel {
 

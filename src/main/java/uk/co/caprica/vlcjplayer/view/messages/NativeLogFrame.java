@@ -19,13 +19,17 @@
 
 package uk.co.caprica.vlcjplayer.view.messages;
 
-import static uk.co.caprica.vlcjplayer.Application.resources;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.prefs.Preferences;
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.swing.AdvancedTableModel;
+import ca.odell.glazedlists.swing.GlazedListsSwing;
+import com.google.common.eventbus.Subscribe;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.log.LogEventListener;
+import uk.co.caprica.vlcj.log.LogLevel;
+import uk.co.caprica.vlcj.log.NativeLog;
+import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
+import uk.co.caprica.vlcjplayer.view.BaseFrame;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -41,19 +45,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.prefs.Preferences;
 
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.log.LogLevel;
-import uk.co.caprica.vlcj.log.LogEventListener;
-import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
-import uk.co.caprica.vlcjplayer.view.BaseFrame;
-import ca.odell.glazedlists.BasicEventList;
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.swing.AdvancedTableModel;
-import ca.odell.glazedlists.swing.GlazedListsSwing;
-
-import com.google.common.eventbus.Subscribe;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 @SuppressWarnings("serial")
 public final class NativeLogFrame extends BaseFrame implements LogEventListener {

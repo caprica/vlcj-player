@@ -19,19 +19,18 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-import java.awt.Component;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JMenu;
-import javax.swing.JRadioButtonMenuItem;
-
 import uk.co.caprica.vlcj.player.base.AudioDevice;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.AudioDeviceAction;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
+import javax.swing.JRadioButtonMenuItem;
+import java.awt.Component;
+
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 public final class AudioDeviceMenu extends OnDemandMenu {
 

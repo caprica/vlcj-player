@@ -23,7 +23,7 @@ import com.google.common.collect.ImmutableList;
 import uk.co.caprica.vlcj.player.base.AudioChannel;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
-import javax.swing.*;
+import javax.swing.Action;
 import java.util.ArrayList;
 import java.util.List;
 

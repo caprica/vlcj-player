@@ -19,17 +19,16 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Action;
-
 import uk.co.caprica.vlcj.player.base.TitleDescription;
 import uk.co.caprica.vlcj.player.base.TrackDescription;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.TitleAction;
+
+import javax.swing.Action;
+import java.util.ArrayList;
+import java.util.List;
+
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 final class TitleTrackMenu extends TrackMenu {
 

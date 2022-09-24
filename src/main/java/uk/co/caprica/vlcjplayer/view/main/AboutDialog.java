@@ -19,9 +19,14 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.Application.resources;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.support.Info;
 
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.KeyStroke;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Font;
@@ -32,14 +37,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.KeyStroke;
-
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.support.Info;
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 final class AboutDialog extends JDialog {
 

@@ -23,7 +23,11 @@ import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JMenu;
+import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 import java.awt.event.ActionEvent;
 import java.util.List;
 

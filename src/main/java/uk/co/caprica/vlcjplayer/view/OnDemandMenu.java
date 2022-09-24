@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcjplayer.view;
 
+import uk.co.caprica.vlcjplayer.view.action.Resource;
+
 import javax.swing.JMenu;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-
-import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 public abstract class OnDemandMenu implements MenuListener {
 

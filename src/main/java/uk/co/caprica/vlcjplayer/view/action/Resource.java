@@ -19,11 +19,11 @@
 
 package uk.co.caprica.vlcjplayer.view.action;
 
-import static uk.co.caprica.vlcjplayer.Application.resources;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
+
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 public final class Resource {
 

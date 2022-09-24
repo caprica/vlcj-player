@@ -19,16 +19,14 @@
 
 package uk.co.caprica.vlcjplayer.view;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-
-import java.io.IOException;
+import com.google.common.eventbus.Subscribe;
+import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import java.io.IOException;
 
-import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
-
-import com.google.common.eventbus.Subscribe;
+import static uk.co.caprica.vlcjplayer.Application.application;
 
 @SuppressWarnings("serial")
 public abstract class BaseFrame extends JFrame {

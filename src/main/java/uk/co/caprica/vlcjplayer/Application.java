@@ -20,19 +20,20 @@
 package uk.co.caprica.vlcjplayer;
 
 import com.google.common.eventbus.EventBus;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.component.callback.FilledCallbackImagePainter;
-import uk.co.caprica.vlcj.player.component.callback.FixedCallbackImagePainter;
 import uk.co.caprica.vlcj.player.component.callback.ScaledCallbackImagePainter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 
-import javax.swing.*;
-import java.util.*;
+import javax.swing.SwingUtilities;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

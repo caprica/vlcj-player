@@ -19,12 +19,11 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import javax.swing.TransferHandler;
 import java.awt.datatransfer.DataFlavor;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-
-import javax.swing.TransferHandler;
 
 @SuppressWarnings("serial")
 abstract class MediaTransferHandler extends TransferHandler {

@@ -19,6 +19,8 @@
 
 package uk.co.caprica.vlcjplayer.view.image;
 
+import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -30,9 +32,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-
-import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 
 /**
  * A panel that paints a background image.

@@ -19,23 +19,34 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.Application.resources;
-import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.concurrent.Semaphore;
-import java.util.prefs.Preferences;
+import com.google.common.eventbus.Subscribe;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.media.MediaSlaveType;
+import uk.co.caprica.vlcj.media.TrackType;
+import uk.co.caprica.vlcj.player.base.Logo;
+import uk.co.caprica.vlcj.player.base.LogoPosition;
+import uk.co.caprica.vlcj.player.base.Marquee;
+import uk.co.caprica.vlcj.player.base.MarqueePosition;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.renderer.RendererItem;
+import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
+import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
+import uk.co.caprica.vlcjplayer.event.PausedEvent;
+import uk.co.caprica.vlcjplayer.event.PlayingEvent;
+import uk.co.caprica.vlcjplayer.event.RendererAddedEvent;
+import uk.co.caprica.vlcjplayer.event.RendererDeletedEvent;
+import uk.co.caprica.vlcjplayer.event.ShowDebugEvent;
+import uk.co.caprica.vlcjplayer.event.ShowEffectsEvent;
+import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
+import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
+import uk.co.caprica.vlcjplayer.event.StoppedEvent;
+import uk.co.caprica.vlcjplayer.view.BaseFrame;
+import uk.co.caprica.vlcjplayer.view.action.StandardAction;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
+import uk.co.caprica.vlcjplayer.view.action.mediaplayer.RendererAction;
+import uk.co.caprica.vlcjplayer.view.snapshot.SnapshotView;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -55,38 +66,22 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.prefs.Preferences;
 
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.media.TrackType;
-import uk.co.caprica.vlcj.player.base.LogoPosition;
-import uk.co.caprica.vlcj.player.base.MarqueePosition;
-import uk.co.caprica.vlcj.media.MediaSlaveType;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.base.Logo;
-import uk.co.caprica.vlcj.player.base.Marquee;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.renderer.RendererItem;
-import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
-import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
-import uk.co.caprica.vlcjplayer.event.PausedEvent;
-import uk.co.caprica.vlcjplayer.event.PlayingEvent;
-import uk.co.caprica.vlcjplayer.event.RendererAddedEvent;
-import uk.co.caprica.vlcjplayer.event.RendererDeletedEvent;
-import uk.co.caprica.vlcjplayer.event.ShowDebugEvent;
-import uk.co.caprica.vlcjplayer.event.ShowEffectsEvent;
-import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
-import uk.co.caprica.vlcjplayer.event.SnapshotImageEvent;
-import uk.co.caprica.vlcjplayer.event.StoppedEvent;
-import uk.co.caprica.vlcjplayer.view.BaseFrame;
-import uk.co.caprica.vlcjplayer.view.MouseMovementDetector;
-import uk.co.caprica.vlcjplayer.view.action.StandardAction;
-import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
-import uk.co.caprica.vlcjplayer.view.action.mediaplayer.RendererAction;
-import uk.co.caprica.vlcjplayer.view.snapshot.SnapshotView;
-
-import com.google.common.eventbus.Subscribe;
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.Application.resources;
+import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
 @SuppressWarnings("serial")
 public final class MainFrame extends BaseFrame {

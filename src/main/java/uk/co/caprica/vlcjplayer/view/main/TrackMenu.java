@@ -19,16 +19,15 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import java.util.List;
+import uk.co.caprica.vlcj.player.base.TrackDescription;
+import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
+import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
-
-import uk.co.caprica.vlcj.player.base.TrackDescription;
-import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
-import uk.co.caprica.vlcjplayer.view.action.Resource;
+import java.util.List;
 
 abstract class TrackMenu extends OnDemandMenu {
 

@@ -19,12 +19,12 @@
 
 package uk.co.caprica.vlcjplayer.view.effects.audio;
 
-import static uk.co.caprica.vlcjplayer.Application.resources;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcjplayer.view.BasePanel;
 
 import javax.swing.JTabbedPane;
 
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcjplayer.view.BasePanel;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 public class AudioEffectsPanel extends BasePanel {
 

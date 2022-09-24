@@ -23,7 +23,8 @@ import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcjplayer.view.action.StandardAction;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;

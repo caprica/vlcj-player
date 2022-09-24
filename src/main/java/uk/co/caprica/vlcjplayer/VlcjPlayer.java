@@ -19,24 +19,16 @@
 
 package uk.co.caprica.vlcjplayer;
 
-import com.sun.jna.NativeLibrary;
 import uk.co.caprica.nativestreams.NativeStreams;
-import uk.co.caprica.vlcj.binding.LibC;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscoverer;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererDescription;
 import uk.co.caprica.vlcj.player.renderer.RendererDiscovererEventListener;
 import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcj.support.Info;
-import uk.co.caprica.vlcj.binding.RuntimeUtil;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.log.NativeLog;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.fullscreen.exclusivemode.ExclusiveModeFullScreenStrategy;
-import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
-import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
 import uk.co.caprica.vlcjplayer.event.RendererAddedEvent;
 import uk.co.caprica.vlcjplayer.event.RendererDeletedEvent;
 import uk.co.caprica.vlcjplayer.event.ShutdownEvent;
@@ -45,8 +37,8 @@ import uk.co.caprica.vlcjplayer.view.effects.EffectsFrame;
 import uk.co.caprica.vlcjplayer.view.main.MainFrame;
 import uk.co.caprica.vlcjplayer.view.messages.NativeLogFrame;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -58,11 +50,6 @@ import static uk.co.caprica.vlcjplayer.Application.application;
  * Application entry-point.
  */
 public class VlcjPlayer implements RendererDiscovererEventListener {
-
-    static {
-//        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "/disks/data/build/install/libs-3");
-//        LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", "/disks/data/build/install/libs-3/plugins", 1);
-    }
 
     private static VlcjPlayer app;
 
@@ -106,22 +93,10 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         System.out.printf("PATH             : %s%n", val(info.path()));
         System.out.printf("VLC_PLUGIN_PATH  : %s%n", val(info.pluginPath()));
 
-        if (RuntimeUtil.isNix()) {
-            System.out.printf("LD_LIBRARY_PATH  : %s%n", val(info.ldLibraryPath()));
-        } else if (RuntimeUtil.isMac()) {
-            System.out.printf("DYLD_LIBRARY_PATH          : %s%n", val(info.dyldLibraryPath()));
-            System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", val(info.dyldFallbackLibraryPath()));
-        }
-
         setLookAndFeel();
 
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-                app = new VlcjPlayer();
-                app.start();
-//            }
-//        });
+        app = new VlcjPlayer();
+        app.start();
     }
 
     private static String val(String val) {

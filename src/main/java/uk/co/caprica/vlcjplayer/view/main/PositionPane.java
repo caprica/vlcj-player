@@ -19,10 +19,10 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.time.Time.formatTime;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+import com.google.common.eventbus.Subscribe;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcjplayer.event.TickEvent;
+import uk.co.caprica.vlcjplayer.view.StandardLabel;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,13 +30,10 @@ import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.event.TickEvent;
-import uk.co.caprica.vlcjplayer.view.StandardLabel;
-
-import com.google.common.eventbus.Subscribe;
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.time.Time.formatTime;
 
 final class PositionPane extends JPanel {
 

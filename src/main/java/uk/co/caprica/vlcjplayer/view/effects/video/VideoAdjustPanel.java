@@ -19,23 +19,22 @@
 
 package uk.co.caprica.vlcjplayer.view.effects.video;
 
-import static uk.co.caprica.vlcjplayer.Application.application;
-import static uk.co.caprica.vlcjplayer.Application.resources;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.player.base.LibVlcConst;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcjplayer.view.BasePanel;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import net.miginfocom.swing.MigLayout;
-import uk.co.caprica.vlcj.player.base.LibVlcConst;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcjplayer.view.BasePanel;
+import static uk.co.caprica.vlcjplayer.Application.application;
+import static uk.co.caprica.vlcjplayer.Application.resources;
 
 // Note that LibVLC 3.0.0 currently has a problem that the video adjust filter needs to be disabled then enabled again after changing ANY property
 
