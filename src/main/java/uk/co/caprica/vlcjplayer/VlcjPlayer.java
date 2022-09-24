@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcjplayer;
 
 import uk.co.caprica.nativestreams.NativeStreams;
-import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
@@ -105,7 +104,8 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
 
     private static void setLookAndFeel() {
         String lookAndFeelClassName;
-        if (RuntimeUtil.isNix()) {
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("nux") || osName.contains("nix") || osName.contains("freebsd")) {
             lookAndFeelClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
         }
         else {

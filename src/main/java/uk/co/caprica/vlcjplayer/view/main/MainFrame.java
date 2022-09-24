@@ -689,7 +689,7 @@ public final class MainFrame extends BaseFrame {
     public void onRendererDeleted(RendererDeletedEvent event) {
         synchronized (renderers) {
             for (RendererItem renderer : renderers) {
-                if (renderer.rendererItemInstance().equals(event.rendererItem().rendererItemInstance())) {
+                if (renderer == event.rendererItem()) {
                     renderers.remove(renderer);
                     break;
                 }
@@ -699,17 +699,14 @@ public final class MainFrame extends BaseFrame {
     }
 
     private void updateRenderersMenu() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (renderers) {
-                    for (int i = 1; i < playbackRendererMenu.getItemCount(); i++) {
-                        playbackRendererMenu.remove(i);
-                    }
+        SwingUtilities.invokeLater(() -> {
+            synchronized (renderers) {
+                for (int i = 1; i < playbackRendererMenu.getItemCount(); i++) {
+                    playbackRendererMenu.remove(i);
+                }
 
-                    for (RendererItem renderer : renderers) {
-                        playbackRendererMenu.add(new RendererAction(renderer.name(), renderer));
-                    }
+                for (RendererItem renderer : renderers) {
+                    playbackRendererMenu.add(new RendererAction(renderer.name(), renderer));
                 }
             }
         });
