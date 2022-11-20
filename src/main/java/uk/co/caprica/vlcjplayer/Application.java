@@ -65,7 +65,7 @@ public final class Application {
      * Video output can be "EMBEDDED" for the usual hardware-accelerated playback, or "CALLBACK" for the software or
      * "direct-rendering" approach.
      */
-    private VideoOutput videoOutput = VideoOutput.CALLBACK;
+    private VideoOutput videoOutput = VideoOutput.EMBEDDED;
 
     private static final class ApplicationHolder {
         private static final Application INSTANCE = new Application();
