@@ -20,7 +20,7 @@
 package uk.co.caprica.vlcjplayer;
 
 import uk.co.caprica.nativestreams.NativeStreams;
-//import uk.co.caprica.vlcj.ffi.runtime.RuntimeEnvironment;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
@@ -43,18 +43,12 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static uk.co.caprica.vlcj.ffi.runtime.RuntimeEnvironment.runtimeEnvironment;
 import static uk.co.caprica.vlcjplayer.Application.application;
 
 /**
  * Application entry-point.
  */
 public class VlcjPlayer implements RendererDiscovererEventListener {
-
-    static {
-//        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "/disks/data/build/install/libs-3");
-//        LibC.INSTANCE.setenv("VLC_PLUGIN_PATH", "/disks/data/build/install/libs-3/plugins", 1);
-    }
 
     private static VlcjPlayer app;
 
@@ -63,12 +57,12 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     // Redirect the native output streams to files, useful since VLC can generate a lot of noisy native logs we don't care about
     // (on the other hand, if we don't look at the logs we might won't see errors)
     static {
-//        if (RuntimeUtil.isNix()) {
-//            nativeStreams = new NativeStreams("stdout.log", "stderr.log");
-//        }
-//        else {
+        if (RuntimeUtil.isNix()) {
+            nativeStreams = new NativeStreams("stdout.log", "stderr.log");
+        }
+        else {
             nativeStreams = null;
-//        }
+        }
     }
 
     private final List<RendererDiscoverer> rendererDiscoverers = new ArrayList<>();
@@ -98,22 +92,10 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         System.out.printf("PATH             : %s%n", val(info.path()));
         System.out.printf("VLC_PLUGIN_PATH  : %s%n", val(info.pluginPath()));
 
-//        if (runtimeEnvironment().isLinux()) {
-//            System.out.printf("LD_LIBRARY_PATH  : %s%n", val(info.ldLibraryPath()));
-//        } else if (runtimeEnvironment().isMac()) {
-//            System.out.printf("DYLD_LIBRARY_PATH          : %s%n", val(info.dyldLibraryPath()));
-//            System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", val(info.dyldFallbackLibraryPath()));
-//        }
-
         setLookAndFeel();
 
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-                app = new VlcjPlayer();
-                app.start();
-//            }
-//        });
+        app = new VlcjPlayer();
+        app.start();
     }
 
     private static String val(String val) {
@@ -121,19 +103,13 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     }
 
     private static void setLookAndFeel() {
-        String lookAndFeelClassName;
-//        if (runtimeEnvironment().isLinux()) {
-            lookAndFeelClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
-//        }
-//        else {
-//            lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-//        }
-//        try {
-//            UIManager.setLookAndFeel(lookAndFeelClassName);
-//        }
-//        catch(Exception e) {
-//            // Silently fail, it doesn't matter
-//        }
+        String lookAndFeelClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+        try {
+            UIManager.setLookAndFeel(lookAndFeelClassName);
+        }
+        catch(Exception e) {
+            // Silently fail, it doesn't matter
+        }
     }
 
     public VlcjPlayer() {
