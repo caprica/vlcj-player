@@ -21,7 +21,12 @@ package uk.co.caprica.vlcjplayer.view.main;
 
 import com.google.common.eventbus.Subscribe;
 import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.Logo;
 import uk.co.caprica.vlcj.player.base.LogoPosition;
@@ -167,8 +172,7 @@ public final class MainFrame extends BaseFrame {
         playbackRendererLocalAction = new StandardAction(resource("menu.playback.item.renderer.item.local")) {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-//                application().mediaPlayer().setRenderer(null);
-                // FIXME
+                application().mediaPlayer().renderer().setRenderer(null);
             }
         };
 
@@ -307,7 +311,7 @@ public final class MainFrame extends BaseFrame {
         }
         playbackMenu.add(new JSeparator());
         for (Action action : mediaPlayerActions.playbackControlActions()) {
-            playbackMenu.add(new JMenuItem(action) { // FIXME need a standardmenuitem that disables the tooltip like this, very poor show...
+            playbackMenu.add(new JMenuItem(action) {
                 @Override
                 public String getToolTipText() {
                     return null;
@@ -349,7 +353,7 @@ public final class MainFrame extends BaseFrame {
         videoMenu.add(new JSeparator());
         videoZoomMenu = new JMenu(resource("menu.video.item.zoom").name());
         videoZoomMenu.setMnemonic(resource("menu.video.item.zoom").mnemonic());
-        addActions(mediaPlayerActions.videoZoomActions(), videoZoomMenu/*, true*/); // FIXME how to handle zoom 1:1 and fit to window - also, probably should not use addActions to select
+        addActions(mediaPlayerActions.videoZoomActions(), videoZoomMenu);
         videoMenu.add(videoZoomMenu);
         videoAspectRatioMenu = new JMenu(resource("menu.video.item.aspectRatio").name());
         videoAspectRatioMenu.setMnemonic(resource("menu.video.item.aspectRatio").mnemonic());
@@ -493,16 +497,6 @@ public final class MainFrame extends BaseFrame {
                 });
             }
 
-//            @Override
-//            public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//// FIXME                        statusBar.setTitle(mediaPlayer.getMediaMeta().getTitle());
-//                    }
-//                });
-//            }
-
             @Override
             public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -530,7 +524,20 @@ public final class MainFrame extends BaseFrame {
             }
         });
 
+        MediaEventListener mediaEventListener = new MediaEventAdapter() {
+            @Override
+            public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        statusBar.setTitle(media.meta().get(Meta.TITLE));
+                    }
+                });
+            }
+        };
+
         application().mediaPlayerComponent().mediaPlayer().events().addMediaPlayerEventListener(mediaPlayerEventListener);
+        application().mediaPlayerComponent().mediaPlayer().events().addMediaEventListener(mediaEventListener);
         application().callbackMediaPlayerComponent().mediaPlayer().events().addMediaPlayerEventListener(mediaPlayerEventListener);
 
         getActionMap().put(ACTION_EXIT_FULLSCREEN, new AbstractAction() {
@@ -543,12 +550,12 @@ public final class MainFrame extends BaseFrame {
 
         applyPreferences();
 
-// FIXME        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.videoSurfaceComponent(), 500, mediaPlayerComponent);
+//        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.videoSurfaceComponent(), 500, mediaPlayerComponent);
 
         setMinimumSize(new Dimension(370, 240));
 
-//        setLogoAndMarquee(application().mediaPlayerComponent().mediaPlayer());
-//        setLogoAndMarquee(application().callbackMediaPlayerComponent().mediaPlayer());
+        setLogoAndMarquee(application().mediaPlayerComponent().mediaPlayer());
+        setLogoAndMarquee(application().callbackMediaPlayerComponent().mediaPlayer());
     }
 
     private ButtonGroup addActions(List<Action> actions, JMenu menu, boolean selectFirst) {
@@ -661,11 +668,10 @@ public final class MainFrame extends BaseFrame {
     public void onRendererDeleted(RendererDeletedEvent event) {
         synchronized (renderers) {
             for (RendererItem renderer : renderers) {
-                // FIXME
-//                if (renderer.rendererItemInstance().equals(event.rendererItem().rendererItemInstance())) {
-//                    renderers.remove(renderer);
-//                    break;
-//                }
+                if (renderer.rendererItemInstance().equals(event.rendererItem().rendererItemInstance())) {
+                    renderers.remove(renderer);
+                    break;
+                }
             }
         }
         updateRenderersMenu();

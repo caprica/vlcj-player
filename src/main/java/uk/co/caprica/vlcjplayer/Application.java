@@ -159,8 +159,7 @@ public final class Application {
     }
 
     public void setRenderer(RendererItem renderer) {
-        // FIXME
-//        mediaPlayerComponent.mediaPlayer().setRenderer(renderer);
+        mediaPlayerComponent.mediaPlayer().renderer().setRenderer(renderer);
     }
 
 }

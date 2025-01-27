@@ -70,7 +70,6 @@ public class SnapshotView extends JFrame {
                     file = new File(file.getAbsolutePath() + DEFAULT_FILE_EXTENSION);
                     ext = DEFAULT_FILE_EXTENSION;
                 }
-                // FIXME should warn about overwriting if the file exists
                 boolean wrote = ImageIO.write(image, ext, file);
                 if (!wrote) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(resources().getString("error.saveImage"), file.toString(), MessageFormat.format(resources().getString("error.saveImageFormat"), ext)), resources().getString("dialog.saveImage"), JOptionPane.ERROR_MESSAGE);

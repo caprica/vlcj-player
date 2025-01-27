@@ -118,8 +118,6 @@ final class ControlsPane extends BasePanel {
             }
         });
 
-        // FIXME really these should share common actions
-
         muteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,17 +142,17 @@ final class ControlsPane extends BasePanel {
 
     @Subscribe
     public void onPlaying(PlayingEvent event) {
-        playPauseButton.setIcon(pauseIcon); // FIXME best way to do this? should be via the action really?
+        playPauseButton.setIcon(pauseIcon);
     }
 
     @Subscribe
     public void onPaused(PausedEvent event) {
-        playPauseButton.setIcon(playIcon); // FIXME best way to do this? should be via the action really?
+        playPauseButton.setIcon(playIcon);
     }
 
     @Subscribe
     public void onStopped(StoppedEvent event) {
-        playPauseButton.setIcon(playIcon); // FIXME best way to do this? should be via the action really?
+        playPauseButton.setIcon(playIcon);
     }
 
     private class BigButton extends JButton {

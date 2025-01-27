@@ -29,11 +29,6 @@ import java.util.List;
 
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
-// FIXME i think none of these actions need be public now?
-//       the dynamic ones currently are unfortunately... for now... (e.g. videotrack)
-
-// FIXME the play action here could listen to the mediaplayer and change its icon accordingly
-
 public final class MediaPlayerActions {
 
     private final List<Action> playbackSpeedActions;
@@ -127,7 +122,6 @@ public final class MediaPlayerActions {
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.half"    ), 0.50f));
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.original"), 1.00f));
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.double"  ), 2.00f));
-        // FIXME maybe need a zoom default of 0.0 (or is this just fit window?)
         return ImmutableList.copyOf(actions);
     }
 

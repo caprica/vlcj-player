@@ -49,7 +49,7 @@ final class PositionPane extends JPanel {
     PositionPane() {
         timeLabel = new StandardLabel("9:99:99");
 
-        UIManager.put("Slider.paintValue", false); // FIXME how to do this for a single component?
+        UIManager.put("Slider.paintValue", false);
         positionSlider = new JSlider();
         positionSlider.setMinimum(0);
         positionSlider.setMaximum(1000);

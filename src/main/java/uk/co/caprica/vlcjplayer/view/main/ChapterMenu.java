@@ -30,8 +30,6 @@ import java.util.List;
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
-// FIXME there's no reason this couldn't be another radiobutton menu... and show the current chapter - probably more useful that way even if not the same as VLC
-
 final class ChapterMenu extends OnDemandMenu {
 
     ChapterMenu() {

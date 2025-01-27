@@ -71,11 +71,10 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
         this.eventList = new BasicEventList<>();
         this.eventTableModel = GlazedListsSwing.eventTableModelWithThreadProxyList(eventList, new NativeLogTableFormat());
 
-        // FIXME Resource
         clearAction = new AbstractAction("Clear") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventList.clear(); // FIXME this definitely glitched once when messing about with verbosity combo then clearing (some items were left in table until table resized)
+                eventList.clear();
             }
         };
 
@@ -84,8 +83,6 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
             public void actionPerformed(ActionEvent e) {
             }
         };
-
-        // FIXME proper Resource with mnemonic etc
 
         clearButton = new JButton();
         clearButton.setAction(clearAction);
@@ -139,8 +136,6 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
 
         setContentPane(contentPane);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-
-        // FIXME use filter with glazed lists
 
         levelComboBox.addItemListener(new ItemListener() {
             @Override

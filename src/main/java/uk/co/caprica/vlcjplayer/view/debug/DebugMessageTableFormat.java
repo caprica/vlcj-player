@@ -23,7 +23,6 @@ import ca.odell.glazedlists.gui.TableFormat;
 
 final class DebugMessageTableFormat implements TableFormat<DebugMessage> {
 
-    // FIXME resource bundle
     private static final String[] COLUMN_NAMES = {
         "Message"
     };
