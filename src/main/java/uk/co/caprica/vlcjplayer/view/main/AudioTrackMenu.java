@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcjplayer.view.main;
 
 import uk.co.caprica.vlcj.player.base.AudioTrack;
+import uk.co.caprica.vlcj.player.base.TextTrack;
 import uk.co.caprica.vlcj.player.base.TrackList;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.AudioTrackAction;
 
@@ -36,7 +37,7 @@ final class AudioTrackMenu extends TrackMenu<AudioTrack> {
 
     @Override
     protected Action createAction(AudioTrack trackDescription) {
-        return new AudioTrackAction(trackDescription.description(), trackDescription);
+        return new AudioTrackAction(trackName(trackDescription), trackDescription);
     }
 
     @Override
@@ -46,7 +47,7 @@ final class AudioTrackMenu extends TrackMenu<AudioTrack> {
 
     @Override
     protected int onGetSelectedTrack() {
-        // FIXME probably not right anymore with id?
-        return application().mediaPlayer().tracks().selectedAudioTrack().id();
+        AudioTrack selectedTrack = application().mediaPlayer().tracks().selectedAudioTrack();
+        return selectedTrack != null ? selectedTrack.id() : -1;
     }
 }

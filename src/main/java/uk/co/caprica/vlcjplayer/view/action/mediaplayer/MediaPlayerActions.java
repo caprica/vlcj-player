@@ -20,6 +20,7 @@
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import com.google.common.collect.ImmutableList;
+import uk.co.caprica.vlcj.player.base.AudioMixMode;
 import uk.co.caprica.vlcj.player.base.AudioStereoMode;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -37,6 +38,7 @@ public final class MediaPlayerActions {
     private final List<Action> playbackControlActions;
 
     private final List<Action> audioStereoModeActions;
+    private final List<Action> audioMixModeActions;
     private final List<Action> audioControlActions;
 
     private final List<Action> videoZoomActions;
@@ -54,6 +56,7 @@ public final class MediaPlayerActions {
         playbackChapterActions  = newPlaybackChapterActions (mediaPlayer);
         playbackControlActions  = newPlaybackControlActions (mediaPlayer);
         audioStereoModeActions  = newAudioStereoModeActions (mediaPlayer);
+        audioMixModeActions     = newAudioMixModeActions    (mediaPlayer);
         audioControlActions     = newAudioControlActions    (mediaPlayer);
         videoZoomActions        = newVideoZoomActions       (mediaPlayer);
         videoAspectRatioActions = newVideoAspectRatioActions(mediaPlayer);
@@ -105,6 +108,17 @@ public final class MediaPlayerActions {
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioStereoMode.DOLBYS));
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), AudioStereoMode.HEADPHONES));
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioStereoMode.MONO));
+        return ImmutableList.copyOf(actions);
+    }
+
+    private List<Action> newAudioMixModeActions(MediaPlayer mediaPlayer) {
+        List<Action> actions = new ArrayList<>();
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.unset"   ), AudioMixMode.UNSET));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.stereo"  ), AudioMixMode.STEREO));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.binaural"), AudioMixMode.BINAURAL));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.fourZero"), AudioMixMode.FOUR_ZERO));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.fiveOne" ), AudioMixMode.FIVE_ONE));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.sevenOne"), AudioMixMode.SEVEN_ONE));
         return ImmutableList.copyOf(actions);
     }
 
@@ -173,6 +187,10 @@ public final class MediaPlayerActions {
 
     public List<Action> audioStereoModeActions() {
         return audioStereoModeActions;
+    }
+
+    public List<Action> audioMixModeActions() {
+        return audioMixModeActions;
     }
 
     public List<Action> audioControlActions() {

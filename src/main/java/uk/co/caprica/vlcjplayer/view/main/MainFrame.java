@@ -111,6 +111,7 @@ public final class MainFrame extends BaseFrame {
     private final JMenu audioTrackMenu;
     private final JMenu audioDeviceMenu;
     private final JMenu audioStereoMenu;
+    private final JMenu audioMixModeMenu;
 
     private final JMenu videoMenu;
     private final JMenu videoTrackMenu;
@@ -330,11 +331,12 @@ public final class MainFrame extends BaseFrame {
         audioMenu.add(audioDeviceMenu);
         audioStereoMenu = new JMenu(resource("menu.audio.item.stereoMode").name());
         audioStereoMenu.setMnemonic(resource("menu.audio.item.stereoMode").mnemonic());
-        for (Action action : mediaPlayerActions.audioStereoModeActions()) {
-            // FIXME the radio buttons are not clearing when the selection changes
-            audioStereoMenu.add(new JRadioButtonMenuItem(action));
-        }
+        addActions(mediaPlayerActions.audioStereoModeActions(), audioStereoMenu);
         audioMenu.add(audioStereoMenu);
+        audioMixModeMenu = new JMenu(resource("menu.audio.item.audioMixMode").name());
+        audioMixModeMenu.setMnemonic(resource("menu.audio.item.audioMixMode").mnemonic());
+        addActions(mediaPlayerActions.audioMixModeActions(), audioMixModeMenu);
+        audioMenu.add(audioMixModeMenu);
         audioMenu.add(new JSeparator());
         for (Action action : mediaPlayerActions.audioControlActions()) {
             audioMenu.add(new JMenuItem(action));
