@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.debug;
@@ -23,7 +23,6 @@ import ca.odell.glazedlists.gui.TableFormat;
 
 final class DebugMessageTableFormat implements TableFormat<DebugMessage> {
 
-    // FIXME resource bundle
     private static final String[] COLUMN_NAMES = {
         "Message"
     };

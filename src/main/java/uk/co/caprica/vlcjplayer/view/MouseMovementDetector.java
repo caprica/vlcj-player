@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view;
 
-import javax.swing.Timer;
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -62,7 +62,6 @@ public abstract class MouseMovementDetector {
         }
         else {
 //            throw new IllegalStateException("Already started");
-            // FIXME
         }
     }
 

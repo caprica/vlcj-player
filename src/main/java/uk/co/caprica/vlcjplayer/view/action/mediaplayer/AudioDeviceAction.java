@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
@@ -36,7 +36,7 @@ public final class AudioDeviceAction extends MediaPlayerAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        application().mediaPlayer().audio().setOutputDevice(null, audioDevice.getDeviceId());
+        application().mediaPlayer().audio().setOutputDevice(audioDevice.getDeviceId());
     }
 
 }

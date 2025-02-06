@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer;
 
 import uk.co.caprica.nativestreams.NativeStreams;
+import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
@@ -36,8 +37,7 @@ import uk.co.caprica.vlcjplayer.view.effects.EffectsFrame;
 import uk.co.caprica.vlcjplayer.view.main.MainFrame;
 import uk.co.caprica.vlcjplayer.view.messages.NativeLogFrame;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -57,12 +57,12 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     // Redirect the native output streams to files, useful since VLC can generate a lot of noisy native logs we don't care about
     // (on the other hand, if we don't look at the logs we might won't see errors)
     static {
-//        if (RuntimeUtil.isNix()) {
-//            nativeStreams = new NativeStreams("stdout.log", "stderr.log");
-//        }
-//        else {
+        if (RuntimeUtil.isNix()) {
+            nativeStreams = new NativeStreams("stdout.log", "stderr.log");
+        }
+        else {
             nativeStreams = null;
-//        }
+        }
     }
 
     private final List<RendererDiscoverer> rendererDiscoverers = new ArrayList<>();
@@ -103,14 +103,7 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     }
 
     private static void setLookAndFeel() {
-        String lookAndFeelClassName;
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("nux") || osName.contains("nix") || osName.contains("freebsd")) {
-            lookAndFeelClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
-        }
-        else {
-            lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-        }
+        String lookAndFeelClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
         try {
             UIManager.setLookAndFeel(lookAndFeelClassName);
         }

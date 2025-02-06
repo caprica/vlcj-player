@@ -1,6 +1,6 @@
-*You are currently looking at the development branch of vlcj-player for vlcj-4.0.0, if you want a stable version of
-vlcj-player that works with vlcj-3 you should switch to the
-[vlcj-3.x branch](https://github.com/caprica/vlcj-player/tree/vlcj-3.x).*
+*You are currently looking at the development branch of vlcj-player for vlcj-5.0.0, if you want a stable version of
+vlcj-player that works with vlcj-4 you should switch to the
+[vlcj-4.x branch](https://github.com/caprica/vlcj-player/tree/vlcj-4.x).*
 
 vlcj-player
 ===========

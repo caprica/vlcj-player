@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
 import com.google.common.collect.ImmutableList;
-import uk.co.caprica.vlcj.player.base.AudioChannel;
+import uk.co.caprica.vlcj.player.base.AudioMixMode;
+import uk.co.caprica.vlcj.player.base.AudioStereoMode;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import javax.swing.Action;
@@ -28,11 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
-
-// FIXME i think none of these actions need be public now?
-//       the dynamic ones currently are unfortunately... for now... (e.g. videotrack)
-
-// FIXME the play action here could listen to the mediaplayer and change its icon accordingly
 
 public final class MediaPlayerActions {
 
@@ -42,6 +38,7 @@ public final class MediaPlayerActions {
     private final List<Action> playbackControlActions;
 
     private final List<Action> audioStereoModeActions;
+    private final List<Action> audioMixModeActions;
     private final List<Action> audioControlActions;
 
     private final List<Action> videoZoomActions;
@@ -59,6 +56,7 @@ public final class MediaPlayerActions {
         playbackChapterActions  = newPlaybackChapterActions (mediaPlayer);
         playbackControlActions  = newPlaybackControlActions (mediaPlayer);
         audioStereoModeActions  = newAudioStereoModeActions (mediaPlayer);
+        audioMixModeActions     = newAudioMixModeActions    (mediaPlayer);
         audioControlActions     = newAudioControlActions    (mediaPlayer);
         videoZoomActions        = newVideoZoomActions       (mediaPlayer);
         videoAspectRatioActions = newVideoAspectRatioActions(mediaPlayer);
@@ -102,14 +100,24 @@ public final class MediaPlayerActions {
 
     private List<Action> newAudioStereoModeActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), AudioChannel.UNSET));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), AudioChannel.STEREO));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), AudioChannel.LEFT));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), AudioChannel.RIGHT));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), AudioChannel.RSTEREO));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioChannel.DOLBYS));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), AudioChannel.HEADPHONES));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioChannel.MONO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.unset"     ), AudioStereoMode.UNSET));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.stereo"    ), AudioStereoMode.STEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.left"      ), AudioStereoMode.LEFT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), AudioStereoMode.RIGHT));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), AudioStereoMode.RSTEREO));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioStereoMode.DOLBYS));
+        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioStereoMode.MONO));
+        return ImmutableList.copyOf(actions);
+    }
+
+    private List<Action> newAudioMixModeActions(MediaPlayer mediaPlayer) {
+        List<Action> actions = new ArrayList<>();
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.unset"   ), AudioMixMode.UNSET));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.stereo"  ), AudioMixMode.STEREO));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.binaural"), AudioMixMode.BINAURAL));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.fourZero"), AudioMixMode.FOUR_ZERO));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.fiveOne" ), AudioMixMode.FIVE_ONE));
+        actions.add(new AudioMixModeAction(resource("menu.audio.item.audioMixMode.item.sevenOne"), AudioMixMode.SEVEN_ONE));
         return ImmutableList.copyOf(actions);
     }
 
@@ -127,7 +135,6 @@ public final class MediaPlayerActions {
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.half"    ), 0.50f));
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.original"), 1.00f));
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.double"  ), 2.00f));
-        // FIXME maybe need a zoom default of 0.0 (or is this just fit window?)
         return ImmutableList.copyOf(actions);
     }
 
@@ -179,6 +186,10 @@ public final class MediaPlayerActions {
 
     public List<Action> audioStereoModeActions() {
         return audioStereoModeActions;
+    }
+
+    public List<Action> audioMixModeActions() {
+        return audioMixModeActions;
     }
 
     public List<Action> audioControlActions() {

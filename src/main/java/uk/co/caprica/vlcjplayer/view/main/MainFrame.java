@@ -14,15 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
 
 import com.google.common.eventbus.Subscribe;
 import net.miginfocom.swing.MigLayout;
+import uk.co.caprica.vlcj.media.Media;
+import uk.co.caprica.vlcj.media.MediaEventAdapter;
+import uk.co.caprica.vlcj.media.MediaEventListener;
+import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
-import uk.co.caprica.vlcj.media.TrackType;
+import uk.co.caprica.vlcj.media.Meta;
 import uk.co.caprica.vlcj.player.base.Logo;
 import uk.co.caprica.vlcj.player.base.LogoPosition;
 import uk.co.caprica.vlcj.player.base.Marquee;
@@ -48,27 +52,8 @@ import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.RendererAction;
 import uk.co.caprica.vlcjplayer.view.snapshot.SnapshotView;
 
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.ActionMap;
-import javax.swing.ButtonGroup;
-import javax.swing.InputMap;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSeparator;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.MessageFormat;
@@ -125,6 +110,7 @@ public final class MainFrame extends BaseFrame {
     private final JMenu audioTrackMenu;
     private final JMenu audioDeviceMenu;
     private final JMenu audioStereoMenu;
+    private final JMenu audioMixModeMenu;
 
     private final JMenu videoMenu;
     private final JMenu videoTrackMenu;
@@ -186,7 +172,7 @@ public final class MainFrame extends BaseFrame {
         playbackRendererLocalAction = new StandardAction(resource("menu.playback.item.renderer.item.local")) {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                application().mediaPlayer().setRenderer(null);
+                application().mediaPlayer().renderer().setRenderer(null);
             }
         };
 
@@ -325,7 +311,7 @@ public final class MainFrame extends BaseFrame {
         }
         playbackMenu.add(new JSeparator());
         for (Action action : mediaPlayerActions.playbackControlActions()) {
-            playbackMenu.add(new JMenuItem(action) { // FIXME need a standardmenuitem that disables the tooltip like this, very poor show...
+            playbackMenu.add(new JMenuItem(action) {
                 @Override
                 public String getToolTipText() {
                     return null;
@@ -344,11 +330,12 @@ public final class MainFrame extends BaseFrame {
         audioMenu.add(audioDeviceMenu);
         audioStereoMenu = new JMenu(resource("menu.audio.item.stereoMode").name());
         audioStereoMenu.setMnemonic(resource("menu.audio.item.stereoMode").mnemonic());
-        for (Action action : mediaPlayerActions.audioStereoModeActions()) {
-            // FIXME the radio buttons are not clearing when the selection changes
-            audioStereoMenu.add(new JRadioButtonMenuItem(action));
-        }
+        addActions(mediaPlayerActions.audioStereoModeActions(), audioStereoMenu);
         audioMenu.add(audioStereoMenu);
+        audioMixModeMenu = new JMenu(resource("menu.audio.item.audioMixMode").name());
+        audioMixModeMenu.setMnemonic(resource("menu.audio.item.audioMixMode").mnemonic());
+        addActions(mediaPlayerActions.audioMixModeActions(), audioMixModeMenu);
+        audioMenu.add(audioMixModeMenu);
         audioMenu.add(new JSeparator());
         for (Action action : mediaPlayerActions.audioControlActions()) {
             audioMenu.add(new JMenuItem(action));
@@ -367,7 +354,7 @@ public final class MainFrame extends BaseFrame {
         videoMenu.add(new JSeparator());
         videoZoomMenu = new JMenu(resource("menu.video.item.zoom").name());
         videoZoomMenu.setMnemonic(resource("menu.video.item.zoom").mnemonic());
-        addActions(mediaPlayerActions.videoZoomActions(), videoZoomMenu/*, true*/); // FIXME how to handle zoom 1:1 and fit to window - also, probably should not use addActions to select
+        addActions(mediaPlayerActions.videoZoomActions(), videoZoomMenu);
         videoMenu.add(videoZoomMenu);
         videoAspectRatioMenu = new JMenu(resource("menu.video.item.aspectRatio").name());
         videoAspectRatioMenu.setMnemonic(resource("menu.video.item.aspectRatio").mnemonic());
@@ -451,16 +438,6 @@ public final class MainFrame extends BaseFrame {
         MediaPlayerEventListener mediaPlayerEventListener = (new MediaPlayerEventAdapter() {
 
             @Override
-            public void elementaryStreamAdded(MediaPlayer mediaPlayer, TrackType type, int id) {
-//                System.out.printf("ELEMENTARY STREAM ADDED %s %d%n", type, id);
-            }
-
-            @Override
-            public void elementaryStreamSelected(MediaPlayer mediaPlayer, TrackType type, int id) {
-//                System.out.printf("ELEMENTARY STREAM SELECTED %s %d%n", type, id);
-            }
-
-            @Override
             public void playing(MediaPlayer mediaPlayer) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
@@ -496,7 +473,7 @@ public final class MainFrame extends BaseFrame {
             }
 
             @Override
-            public void finished(MediaPlayer mediaPlayer) {
+            public void stopping(MediaPlayer mediaPlayer) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -520,16 +497,6 @@ public final class MainFrame extends BaseFrame {
                     }
                 });
             }
-
-//            @Override
-//            public void mediaParsedChanged(MediaPlayer mediaPlayer, int newStatus) {
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//// FIXME                        statusBar.setTitle(mediaPlayer.getMediaMeta().getTitle());
-//                    }
-//                });
-//            }
 
             @Override
             public void lengthChanged(MediaPlayer mediaPlayer, long newLength) {
@@ -558,7 +525,20 @@ public final class MainFrame extends BaseFrame {
             }
         });
 
+        MediaEventListener mediaEventListener = new MediaEventAdapter() {
+            @Override
+            public void mediaParsedChanged(Media media, MediaParsedStatus newStatus) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        statusBar.setTitle(media.meta().get(Meta.TITLE));
+                    }
+                });
+            }
+        };
+
         application().mediaPlayerComponent().mediaPlayer().events().addMediaPlayerEventListener(mediaPlayerEventListener);
+        application().mediaPlayerComponent().mediaPlayer().events().addMediaEventListener(mediaEventListener);
         application().callbackMediaPlayerComponent().mediaPlayer().events().addMediaPlayerEventListener(mediaPlayerEventListener);
 
         getActionMap().put(ACTION_EXIT_FULLSCREEN, new AbstractAction() {
@@ -571,12 +551,12 @@ public final class MainFrame extends BaseFrame {
 
         applyPreferences();
 
-// FIXME        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.videoSurfaceComponent(), 500, mediaPlayerComponent);
+//        mouseMovementDetector = new VideoMouseMovementDetector(mediaPlayerComponent.videoSurfaceComponent(), 500, mediaPlayerComponent);
 
         setMinimumSize(new Dimension(370, 240));
 
-//        setLogoAndMarquee(application().mediaPlayerComponent().mediaPlayer());
-//        setLogoAndMarquee(application().callbackMediaPlayerComponent().mediaPlayer());
+        setLogoAndMarquee(application().mediaPlayerComponent().mediaPlayer());
+        setLogoAndMarquee(application().callbackMediaPlayerComponent().mediaPlayer());
     }
 
     private ButtonGroup addActions(List<Action> actions, JMenu menu, boolean selectFirst) {

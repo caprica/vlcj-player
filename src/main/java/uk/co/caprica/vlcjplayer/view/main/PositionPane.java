@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
@@ -24,10 +24,7 @@ import net.miginfocom.swing.MigLayout;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.StandardLabel;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -52,7 +49,7 @@ final class PositionPane extends JPanel {
     PositionPane() {
         timeLabel = new StandardLabel("9:99:99");
 
-        UIManager.put("Slider.paintValue", false); // FIXME how to do this for a single component?
+        UIManager.put("Slider.paintValue", false);
         positionSlider = new JSlider();
         positionSlider.setMinimum(0);
         positionSlider.setMaximum(1000);

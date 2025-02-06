@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
+
+import uk.co.caprica.vlcj.player.base.Track;
 
 import java.awt.event.ActionEvent;
 
@@ -25,16 +27,16 @@ import static uk.co.caprica.vlcjplayer.Application.application;
 
 public final class AudioTrackAction extends MediaPlayerAction {
 
-    private final int trackId;
+    private final Track trackId;
 
-    public AudioTrackAction(String name, int trackId) {
+    public AudioTrackAction(String name, Track trackId) {
         super(name);
         this.trackId = trackId;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        application().mediaPlayer().audio().setTrack(trackId);
+        application().mediaPlayer().tracks().selectTrack(trackId);
     }
 
 }

@@ -14,38 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import uk.co.caprica.vlcj.player.base.TrackDescription;
+import uk.co.caprica.vlcj.player.base.TrackList;
+import uk.co.caprica.vlcj.player.base.VideoTrack;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.VideoTrackAction;
 
-import javax.swing.Action;
-import java.util.List;
+import javax.swing.*;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
 import static uk.co.caprica.vlcjplayer.view.action.Resource.resource;
 
-final class VideoTrackMenu extends TrackMenu {
+final class VideoTrackMenu extends TrackMenu<VideoTrack> {
 
     VideoTrackMenu() {
         super(resource("menu.video.item.track"));
     }
 
     @Override
-    protected Action createAction(TrackDescription trackDescription) {
-        return new VideoTrackAction(trackDescription.description(), trackDescription.id());
+    protected Action createAction(VideoTrack trackDescription) {
+        return new VideoTrackAction(trackName(trackDescription), trackDescription);
     }
 
     @Override
-    protected List<TrackDescription> onGetTrackDescriptions() {
-        return application().mediaPlayer().video().trackDescriptions();
+    protected TrackList<VideoTrack> onGetTrackDescriptions() {
+        return application().mediaPlayer().tracks().videoTracks();
     }
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayer().video().track();
+        VideoTrack selectedTrack = application().mediaPlayer().tracks().selectedVideoTrack();
+        return selectedTrack != null ? selectedTrack.id() : -1;
     }
 }

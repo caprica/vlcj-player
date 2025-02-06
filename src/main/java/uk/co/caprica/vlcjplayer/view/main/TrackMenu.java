@@ -14,22 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import uk.co.caprica.vlcj.player.base.TrackDescription;
+import com.google.common.base.Strings;
+import uk.co.caprica.vlcj.player.base.Track;
+import uk.co.caprica.vlcj.player.base.TrackList;
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenu;
-import javax.swing.JRadioButtonMenuItem;
-import java.util.List;
+import javax.swing.*;
 
-abstract class TrackMenu extends OnDemandMenu {
+abstract class TrackMenu<T extends Track> extends OnDemandMenu {
 
     private static final String KEY_TRACK_DESCRIPTION = "track-description";
 
@@ -41,7 +39,7 @@ abstract class TrackMenu extends OnDemandMenu {
     protected final void onPrepareMenu(JMenu menu) {
         ButtonGroup buttonGroup = new ButtonGroup();
         int selectedTrack = onGetSelectedTrack();
-        for (TrackDescription trackDescription : onGetTrackDescriptions()) {
+        for (T trackDescription : onGetTrackDescriptions().tracks()) {
             JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(createAction(trackDescription));
             menuItem.putClientProperty(KEY_TRACK_DESCRIPTION, trackDescription);
             buttonGroup.add(menuItem);
@@ -52,9 +50,18 @@ abstract class TrackMenu extends OnDemandMenu {
         }
     }
 
-    protected abstract Action createAction(TrackDescription trackDescription);
+    protected final String trackName(T trackDescription) {
+        String result = trackDescription.name();
+        String description = trackDescription.description();
+        if (!Strings.isNullOrEmpty(description)) {
+            result += ' ' + description;
+        }
+        return result;
+    }
 
-    protected abstract List<TrackDescription> onGetTrackDescriptions();
+    protected abstract Action createAction(T trackDescription);
+
+    protected abstract TrackList<T> onGetTrackDescriptions();
 
     protected abstract int onGetSelectedTrack();
 }

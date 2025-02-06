@@ -17,9 +17,28 @@
  * Copyright 2015-2025 Caprica Software Limited.
  */
 
-package uk.co.caprica.vlcjplayer.event;
+package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
-public final class TickEvent {
+import uk.co.caprica.vlcj.player.base.AudioMixMode;
+import uk.co.caprica.vlcj.player.base.AudioStereoMode;
+import uk.co.caprica.vlcjplayer.view.action.Resource;
 
-    public static final TickEvent INSTANCE = new TickEvent();
+import java.awt.event.ActionEvent;
+
+import static uk.co.caprica.vlcjplayer.Application.application;
+
+final class AudioMixModeAction extends MediaPlayerAction {
+
+    private final AudioMixMode mode;
+
+    AudioMixModeAction(Resource resource, AudioMixMode mode) {
+        super(resource);
+        this.mode = mode;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        application().mediaPlayer().audio().setMixMode(mode);
+    }
+
 }

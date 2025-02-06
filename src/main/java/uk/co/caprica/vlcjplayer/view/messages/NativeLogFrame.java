@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.messages;
@@ -31,21 +31,8 @@ import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcjplayer.event.ShowMessagesEvent;
 import uk.co.caprica.vlcjplayer.view.BaseFrame;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -84,11 +71,10 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
         this.eventList = new BasicEventList<>();
         this.eventTableModel = GlazedListsSwing.eventTableModelWithThreadProxyList(eventList, new NativeLogTableFormat());
 
-        // FIXME Resource
         clearAction = new AbstractAction("Clear") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventList.clear(); // FIXME this definitely glitched once when messing about with verbosity combo then clearing (some items were left in table until table resized)
+                eventList.clear();
             }
         };
 
@@ -97,8 +83,6 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
             public void actionPerformed(ActionEvent e) {
             }
         };
-
-        // FIXME proper Resource with mnemonic etc
 
         clearButton = new JButton();
         clearButton.setAction(clearAction);
@@ -153,8 +137,6 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
         setContentPane(contentPane);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        // FIXME use filter with glazed lists
-
         levelComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent event) {
@@ -171,7 +153,7 @@ public final class NativeLogFrame extends BaseFrame implements LogEventListener 
     }
 
     @Override
-    public void log(final LogLevel level, final String module, final String file, final Integer line, final String name, final String header, final Integer id, final String message) {
+    public void log(final LogLevel level, final String module, final String file, final Integer line, final String name, final String header, final Long id, final String message) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

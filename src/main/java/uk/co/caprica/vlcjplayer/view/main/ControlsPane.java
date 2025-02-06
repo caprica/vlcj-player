@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
@@ -29,11 +29,7 @@ import uk.co.caprica.vlcjplayer.event.StoppedEvent;
 import uk.co.caprica.vlcjplayer.view.BasePanel;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
@@ -122,8 +118,6 @@ final class ControlsPane extends BasePanel {
             }
         });
 
-        // FIXME really these should share common actions
-
         muteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,17 +142,17 @@ final class ControlsPane extends BasePanel {
 
     @Subscribe
     public void onPlaying(PlayingEvent event) {
-        playPauseButton.setIcon(pauseIcon); // FIXME best way to do this? should be via the action really?
+        playPauseButton.setIcon(pauseIcon);
     }
 
     @Subscribe
     public void onPaused(PausedEvent event) {
-        playPauseButton.setIcon(playIcon); // FIXME best way to do this? should be via the action really?
+        playPauseButton.setIcon(playIcon);
     }
 
     @Subscribe
     public void onStopped(StoppedEvent event) {
-        playPauseButton.setIcon(playIcon); // FIXME best way to do this? should be via the action really?
+        playPauseButton.setIcon(playIcon);
     }
 
     private class BigButton extends JButton {

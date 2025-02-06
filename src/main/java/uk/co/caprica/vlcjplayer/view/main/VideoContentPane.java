@@ -2,8 +2,8 @@ package uk.co.caprica.vlcjplayer.view.main;
 
 import uk.co.caprica.vlcjplayer.view.image.ImagePane;
 
-import javax.swing.JPanel;
-import java.awt.CardLayout;
+import javax.swing.*;
+import java.awt.*;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
 

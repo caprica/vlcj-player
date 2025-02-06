@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
@@ -22,19 +22,13 @@ package uk.co.caprica.vlcjplayer.view.main;
 import net.miginfocom.swing.MigLayout;
 import uk.co.caprica.vlcj.support.Info;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.KeyStroke;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Font;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Properties;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
@@ -90,8 +84,9 @@ final class AboutDialog extends JDialog {
         JLabel nativeLibraryPathLabel = new JLabel();
         nativeLibraryPathLabel.setText(resources().getString("dialog.about.nativeLibraryPath"));
 
+        // FIXME clean this up
         JLabel nativeLibraryPathValueLabel = new ValueLabel();
-        nativeLibraryPathValueLabel.setText(application().mediaPlayerComponent().mediaPlayerFactory().nativeLibraryPath());
+//        nativeLibraryPathValueLabel.setText(application().mediaPlayerComponent().mediaPlayerFactory().nativeLibraryPaths().get("vlc").map(Path::toString).orElse(""));
 
         JLabel vlcVersionValueLabel = new ValueLabel();
         vlcVersionValueLabel.setText(application().mediaPlayerComponent().mediaPlayerFactory().application().version());

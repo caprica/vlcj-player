@@ -4,7 +4,7 @@ import uk.co.caprica.vlcj.player.embedded.fullscreen.adaptive.AdaptiveFullScreen
 import uk.co.caprica.vlcjplayer.event.AfterExitFullScreenEvent;
 import uk.co.caprica.vlcjplayer.event.BeforeEnterFullScreenEvent;
 
-import java.awt.Window;
+import java.awt.*;
 
 import static uk.co.caprica.vlcjplayer.Application.application;
 

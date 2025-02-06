@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
 
-import javax.swing.TransferHandler;
+import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.io.File;
 import java.net.URL;

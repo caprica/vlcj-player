@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
 
-import uk.co.caprica.vlcj.player.base.AudioChannel;
+import uk.co.caprica.vlcj.player.base.AudioStereoMode;
 import uk.co.caprica.vlcjplayer.view.action.Resource;
 
 import java.awt.event.ActionEvent;
@@ -28,16 +28,16 @@ import static uk.co.caprica.vlcjplayer.Application.application;
 
 final class StereoModeAction extends MediaPlayerAction {
 
-    private final AudioChannel mode;
+    private final AudioStereoMode mode;
 
-    StereoModeAction(Resource resource, AudioChannel mode) {
+    StereoModeAction(Resource resource, AudioStereoMode mode) {
         super(resource);
         this.mode = mode;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        application().mediaPlayer().audio().setChannel(mode);
+        application().mediaPlayer().audio().setStereoMode(mode);
     }
 
 }

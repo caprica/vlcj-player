@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.snapshot;
@@ -25,12 +25,8 @@ import uk.co.caprica.vlcjplayer.view.image.ImagePane;
 import uk.co.caprica.vlcjplayer.view.image.ImagePane.Mode;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -74,7 +70,6 @@ public class SnapshotView extends JFrame {
                     file = new File(file.getAbsolutePath() + DEFAULT_FILE_EXTENSION);
                     ext = DEFAULT_FILE_EXTENSION;
                 }
-                // FIXME should warn about overwriting if the file exists
                 boolean wrote = ImageIO.write(image, ext, file);
                 if (!wrote) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(resources().getString("error.saveImage"), file.toString(), MessageFormat.format(resources().getString("error.saveImageFormat"), ext)), resources().getString("dialog.saveImage"), JOptionPane.ERROR_MESSAGE);

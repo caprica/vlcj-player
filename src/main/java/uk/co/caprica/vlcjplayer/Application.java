@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer;
@@ -28,7 +28,7 @@ import uk.co.caprica.vlcj.player.renderer.RendererItem;
 import uk.co.caprica.vlcjplayer.event.TickEvent;
 import uk.co.caprica.vlcjplayer.view.action.mediaplayer.MediaPlayerActions;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -159,7 +159,7 @@ public final class Application {
     }
 
     public void setRenderer(RendererItem renderer) {
-        mediaPlayerComponent.mediaPlayer().setRenderer(renderer);
+        mediaPlayerComponent.mediaPlayer().renderer().setRenderer(renderer);
     }
 
 }
