@@ -148,6 +148,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>maven</executable>
+                    <mainClass>uk.co.caprica.vlcjplayer.VlcjPlayer</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -164,7 +180,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vlcj.version>4.9.0</vlcj.version>
+        <vlcj.version>5.0.0-SNAPSHOT</vlcj.version>
     </properties>
 
     <dependencies>
