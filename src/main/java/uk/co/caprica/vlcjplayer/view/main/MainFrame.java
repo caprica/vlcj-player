@@ -114,6 +114,7 @@ public final class MainFrame extends BaseFrame {
 
     private final JMenu videoMenu;
     private final JMenu videoTrackMenu;
+    private final JMenu videoFitMenu;
     private final JMenu videoZoomMenu;
     private final JMenu videoAspectRatioMenu;
     private final JMenu videoCropMenu;
@@ -352,6 +353,10 @@ public final class MainFrame extends BaseFrame {
         videoMenu.add(new JCheckBoxMenuItem(videoFullscreenAction));
         videoMenu.add(new JCheckBoxMenuItem(videoAlwaysOnTopAction));
         videoMenu.add(new JSeparator());
+        videoFitMenu = new JMenu(resource("menu.video.item.fit").name());
+        videoFitMenu.setMnemonic(resource("menu.video.item.fit").mnemonic());
+        addActions(mediaPlayerActions.videoFitActions(), videoFitMenu);
+        videoMenu.add(videoFitMenu);
         videoZoomMenu = new JMenu(resource("menu.video.item.zoom").name());
         videoZoomMenu.setMnemonic(resource("menu.video.item.zoom").mnemonic());
         addActions(mediaPlayerActions.videoZoomActions(), videoZoomMenu);

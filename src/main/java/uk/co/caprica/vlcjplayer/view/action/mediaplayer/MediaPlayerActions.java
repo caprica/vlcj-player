@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableList;
 import uk.co.caprica.vlcj.player.base.AudioMixMode;
 import uk.co.caprica.vlcj.player.base.AudioStereoMode;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import uk.co.caprica.vlcj.player.base.VideoFitMode;
 
 import javax.swing.Action;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public final class MediaPlayerActions {
     private final List<Action> audioControlActions;
 
     private final List<Action> videoZoomActions;
+    private final List<Action> videoFitActions;
     private final List<Action> videoAspectRatioActions;
     private final List<Action> videoCropActions;
 
@@ -58,6 +60,7 @@ public final class MediaPlayerActions {
         audioStereoModeActions  = newAudioStereoModeActions (mediaPlayer);
         audioMixModeActions     = newAudioMixModeActions    (mediaPlayer);
         audioControlActions     = newAudioControlActions    (mediaPlayer);
+        videoFitActions         = newVideoFitActions        (mediaPlayer);
         videoZoomActions        = newVideoZoomActions       (mediaPlayer);
         videoAspectRatioActions = newVideoAspectRatioActions(mediaPlayer);
         videoCropActions        = newVideoCropActions       (mediaPlayer);
@@ -129,6 +132,16 @@ public final class MediaPlayerActions {
         return ImmutableList.copyOf(actions);
     }
 
+    private List<Action> newVideoFitActions(MediaPlayer mediaPlayer) {
+        List<Action> actions = new ArrayList<>();
+        actions.add(new VideoFitModeAction(resource("menu.video.item.fit.item.none"    ), VideoFitMode.NONE));
+        actions.add(new VideoFitModeAction(resource("menu.video.item.fit.item.smaller" ), VideoFitMode.SMALLER));
+        actions.add(new VideoFitModeAction(resource("menu.video.item.fit.item.larger"  ), VideoFitMode.LARGER));
+        actions.add(new VideoFitModeAction(resource("menu.video.item.fit.item.width"   ), VideoFitMode.WIDTH));
+        actions.add(new VideoFitModeAction(resource("menu.video.item.fit.item.height"  ), VideoFitMode.HEIGHT));
+        return ImmutableList.copyOf(actions);
+    }
+
     private List<Action> newVideoZoomActions(MediaPlayer mediaPlayer) {
         List<Action> actions = new ArrayList<>();
         actions.add(new ZoomAction(resource("menu.video.item.zoom.item.quarter" ), 0.25f));
@@ -194,6 +207,10 @@ public final class MediaPlayerActions {
 
     public List<Action> audioControlActions() {
         return audioControlActions;
+    }
+
+    public List<Action> videoFitActions() {
+        return videoFitActions;
     }
 
     public List<Action> videoZoomActions() {
