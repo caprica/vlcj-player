@@ -159,7 +159,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vlcj.version>4.8.0</vlcj.version>
+        <vlcj.version>4.9.0</vlcj.version>
     </properties>
 
     <dependencies>
