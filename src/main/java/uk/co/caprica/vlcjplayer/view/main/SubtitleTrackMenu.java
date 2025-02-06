@@ -36,7 +36,7 @@ final class SubtitleTrackMenu extends TrackMenu<TextTrack> {
 
     @Override
     protected Action createAction(TextTrack trackDescription) {
-        return new SubtitleTrackAction(trackDescription.description(), trackDescription);
+        return new SubtitleTrackAction(trackName(trackDescription), trackDescription);
     }
 
     @Override
@@ -46,6 +46,7 @@ final class SubtitleTrackMenu extends TrackMenu<TextTrack> {
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayer().tracks().selectedTextTrack().id();
+        TextTrack selectedTrack = application().mediaPlayer().tracks().selectedTextTrack();
+        return selectedTrack != null ? selectedTrack.id() : -1;
     }
 }

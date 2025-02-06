@@ -36,7 +36,7 @@ final class VideoTrackMenu extends TrackMenu<VideoTrack> {
 
     @Override
     protected Action createAction(VideoTrack trackDescription) {
-        return new VideoTrackAction(trackDescription.description(), trackDescription);
+        return new VideoTrackAction(trackName(trackDescription), trackDescription);
     }
 
     @Override
@@ -46,6 +46,7 @@ final class VideoTrackMenu extends TrackMenu<VideoTrack> {
 
     @Override
     protected int onGetSelectedTrack() {
-        return application().mediaPlayer().tracks().selectedVideoTrack().id();
+        VideoTrack selectedTrack = application().mediaPlayer().tracks().selectedVideoTrack();
+        return selectedTrack != null ? selectedTrack.id() : -1;
     }
 }

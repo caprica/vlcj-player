@@ -19,6 +19,7 @@
 
 package uk.co.caprica.vlcjplayer.view.main;
 
+import com.google.common.base.Strings;
 import uk.co.caprica.vlcj.player.base.Track;
 import uk.co.caprica.vlcj.player.base.TrackList;
 import uk.co.caprica.vlcjplayer.view.OnDemandMenu;
@@ -47,6 +48,15 @@ abstract class TrackMenu<T extends Track> extends OnDemandMenu {
                 menuItem.setSelected(true);
             }
         }
+    }
+
+    protected final String trackName(T trackDescription) {
+        String result = trackDescription.name();
+        String description = trackDescription.description();
+        if (!Strings.isNullOrEmpty(description)) {
+            result += ' ' + description;
+        }
+        return result;
     }
 
     protected abstract Action createAction(T trackDescription);
