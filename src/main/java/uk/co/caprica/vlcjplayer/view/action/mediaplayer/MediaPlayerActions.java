@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.action.mediaplayer;
@@ -106,7 +106,6 @@ public final class MediaPlayerActions {
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.right"     ), AudioStereoMode.RIGHT));
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.reverse"   ), AudioStereoMode.RSTEREO));
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.dolbys"    ), AudioStereoMode.DOLBYS));
-        actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.headphones"), AudioStereoMode.HEADPHONES));
         actions.add(new StereoModeAction(resource("menu.audio.item.stereoMode.item.mono"      ), AudioStereoMode.MONO));
         return ImmutableList.copyOf(actions);
     }

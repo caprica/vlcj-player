@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VLCJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2015 Caprica Software Limited.
+ * Copyright 2015-2025 Caprica Software Limited.
  */
 
 package uk.co.caprica.vlcjplayer.view.main;
@@ -27,7 +27,6 @@ import uk.co.caprica.vlcj.media.MediaEventListener;
 import uk.co.caprica.vlcj.media.MediaParsedStatus;
 import uk.co.caprica.vlcj.media.MediaSlaveType;
 import uk.co.caprica.vlcj.media.Meta;
-import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.Logo;
 import uk.co.caprica.vlcj.player.base.LogoPosition;
 import uk.co.caprica.vlcj.player.base.Marquee;
