@@ -20,7 +20,6 @@
 package uk.co.caprica.vlcjplayer;
 
 import uk.co.caprica.nativestreams.NativeStreams;
-import uk.co.caprica.vlcj.binding.support.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.log.NativeLog;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
@@ -55,9 +54,11 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
     private static final NativeStreams nativeStreams;
 
     // Redirect the native output streams to files, useful since VLC can generate a lot of noisy native logs we don't care about
-    // (on the other hand, if we don't look at the logs we might won't see errors)
+    // (on the other hand, if we don't look at the logs we won't see errors)
     static {
-        if (RuntimeUtil.isNix()) {
+        String osName = System.getProperty("os.name").toLowerCase();
+        boolean isNix = osName.contains("nux") || osName.contains("nix") || osName.contains("freebsd");
+        if (isNix) {
             nativeStreams = new NativeStreams("stdout.log", "stderr.log");
         }
         else {
