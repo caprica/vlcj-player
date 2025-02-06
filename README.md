@@ -55,19 +55,32 @@ Features
  - redirect native output streams (on Linux)
 
 ...and a whole bunch of other nifty stuff.
- 
+
+Embedded vs Callback Rendering
+------------------------------
+
+This demo application can render with an embedded native media player, this requires heavyweight AWT support which is
+not available on macOS anymore.
+
+Alternatively, "callback" rendering can be enabled by tweaking the `videoOutput` flag in the `Application.java` class.
 
 Status
 ------
 
-This project is currently a work-in-progress.
+This project is perpetually a work-in-progress. It is a demo application showing a lot of vlcj features.
 
-If you execute "mvn install" or "mvn package", you will get a distribution
-package that you can unpack. This will give you the vlcj-player application jar
-and all of the dependencies - you can simply execute `java -jar vlcj-player-1.0.0-SNAPSHOT.jar`
-and the application should start.
+Building & Running
+------------------
 
-On the other hand, just run it from an Eclipse project.
+If you execute "mvn install" or "mvn package", you will get a distribution package that you can unpack. This will give
+you the vlcj-player application jar and all of the dependencies - you can then simply execute
+java -jar vlcj-player-2.0.0-SNAPSHOT.jar` and the application should start.
+
+You can also launch from the command-line using maven:
+
+```shell
+mvn clean compile exec:java
+```
 
 License
 -------
